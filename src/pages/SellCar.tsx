@@ -76,28 +76,28 @@ const SellCar = () => {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-br from-red-600 via-red-100 to-white text-gray-900 overflow-hidden">
-        <div className="absolute top-10 left-20 w-32 h-32 bg-red-100 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-10 right-20 w-24 h-24 bg-red-100 rounded-full blur-2xl"></div>
+      <section className="relative py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-red-900 text-white overflow-hidden">
+        <div className="absolute top-10 left-20 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-10 right-20 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
         
         <div className="relative max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="animate-fade-in">
               <h1 className="text-5xl md:text-6xl logo-font mb-6">
-                Sell Your <span className="text-red-600">Car Today</span>
+                Sell Your <span className="text-red-400">Car Today</span>
               </h1>
-              <p className="text-xl body-font mb-8 text-red-600">
+              <p className="text-xl body-font mb-8 text-red-100">
                 Get the best price for your vehicle with our hassle-free selling process. 
                 Quick quotes, fair prices, and instant payments.
               </p>
               <div className="flex flex-wrap gap-4 mb-8">
-                <div className="flex items-center space-x-2 bg-red-100/60 backdrop-blur-sm px-4 py-2 rounded-full">
-                  <TrendingUp className="w-5 h-5 text-red-600" />
-                  <span className="font-semibold text-red-700">Best Market Prices</span>
+                <div className="flex items-center space-x-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
+                  <TrendingUp className="w-5 h-5 text-red-400" />
+                  <span className="font-semibold text-red-100">Best Market Prices</span>
                 </div>
-                <div className="flex items-center space-x-2 bg-red-100/60 backdrop-blur-sm px-4 py-2 rounded-full">
-                  <Clock className="w-5 h-5 text-red-600" />
-                  <span className="font-semibold text-red-700">48 Hour Process</span>
+                <div className="flex items-center space-x-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
+                  <Clock className="w-5 h-5 text-red-400" />
+                  <span className="font-semibold text-red-100">48 Hour Process</span>
                 </div>
               </div>
               <Button className="bg-red-600 text-white hover:bg-red-700 text-lg px-8 py-3 font-bold transform hover:scale-105 transition-all duration-300">
@@ -107,21 +107,21 @@ const SellCar = () => {
             </div>
             
             <div className="relative animate-fade-in delay-300">
-              <div className="bg-red-100/40 backdrop-blur-sm rounded-3xl p-8 border border-red-200">
+              <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20">
                 <div className="text-center mb-6">
-                  <Car className="w-16 h-16 mx-auto mb-4 text-red-600" />
-                  <h3 className="text-2xl font-bold mb-2 text-gray-900">Quick Valuation</h3>
-                  <p className="text-red-600">Get an instant estimate</p>
+                  <Car className="w-16 h-16 mx-auto mb-4 text-red-400" />
+                  <h3 className="text-2xl font-bold mb-2 text-white">Quick Valuation</h3>
+                  <p className="text-red-100">Get an instant estimate</p>
                 </div>
-                <div className="bg-white rounded-2xl p-6">
+                <div className="bg-white/20 rounded-2xl p-6">
                   <div className="grid grid-cols-2 gap-4 text-center">
                     <div>
-                      <div className="text-3xl font-bold text-red-600">$45K+</div>
-                      <div className="text-sm text-gray-500">Average Sale Price</div>
+                      <div className="text-3xl font-bold text-red-400">$45K+</div>
+                      <div className="text-sm text-white/80">Average Sale Price</div>
                     </div>
                     <div>
-                      <div className="text-3xl font-bold text-red-600">24hrs</div>
-                      <div className="text-sm text-gray-500">Average Response</div>
+                      <div className="text-3xl font-bold text-red-400">24hrs</div>
+                      <div className="text-sm text-white/80">Average Response</div>
                     </div>
                   </div>
                 </div>

@@ -83,29 +83,29 @@ const Finance = () => {
     <div className="min-h-screen bg-gray-50">
       <Navigation />
       
-      {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-br from-red-600 via-red-100 to-white text-gray-900 overflow-hidden">
-        <div className="absolute top-10 left-20 w-32 h-32 bg-red-100 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-10 right-20 w-24 h-24 bg-red-100 rounded-full blur-2xl"></div>
+      {/* Hero Section - Match Home/Inventory/SellCar */}
+      <section className="relative py-20 bg-gradient-to-br from-gray-900 via-gray-800 to-red-900 text-white overflow-hidden">
+        <div className="absolute top-10 left-20 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-10 right-20 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
         
         <div className="relative max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="animate-fade-in">
               <h1 className="text-5xl md:text-6xl logo-font mb-6">
-                Car <span className="text-red-600">Financing</span> Made Easy
+                Car <span className="text-red-400">Financing</span> Made Easy
               </h1>
-              <p className="text-xl body-font mb-8 text-red-600">
+              <p className="text-xl body-font mb-8 text-red-100">
                 Get pre-approved in minutes with competitive rates starting from 2.9% APR. 
                 Flexible terms and expert guidance to fit your budget.
               </p>
               <div className="flex flex-wrap gap-4 mb-8">
-                <div className="flex items-center space-x-2 bg-red-100/60 backdrop-blur-sm px-4 py-2 rounded-full">
-                  <Percent className="w-5 h-5 text-red-600" />
-                  <span className="font-semibold text-red-700">From 2.9% APR</span>
+                <div className="flex items-center space-x-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
+                  <Percent className="w-5 h-5 text-red-400" />
+                  <span className="font-semibold text-red-100">From 2.9% APR</span>
                 </div>
-                <div className="flex items-center space-x-2 bg-red-100/60 backdrop-blur-sm px-4 py-2 rounded-full">
-                  <Clock className="w-5 h-5 text-red-600" />
-                  <span className="font-semibold text-red-700">10 Min Approval</span>
+                <div className="flex items-center space-x-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full">
+                  <Clock className="w-5 h-5 text-red-400" />
+                  <span className="font-semibold text-red-100">10 Min Approval</span>
                 </div>
               </div>
               <Button className="bg-red-600 text-white hover:bg-red-700 text-lg px-8 py-3 font-bold transform hover:scale-105 transition-all duration-300">
@@ -115,18 +115,18 @@ const Finance = () => {
             </div>
             
             <div className="relative animate-fade-in delay-300">
-              <div className="bg-red-100/40 backdrop-blur-sm rounded-3xl p-8 border border-red-200">
+              <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20">
                 <div className="text-center mb-6">
-                  <Calculator className="w-16 h-16 mx-auto mb-4 text-red-600" />
-                  <h3 className="text-2xl font-bold mb-2 text-gray-900">Loan Calculator</h3>
-                  <p className="text-red-600">Estimate your payments</p>
+                  <Calculator className="w-16 h-16 mx-auto mb-4 text-red-400" />
+                  <h3 className="text-2xl font-bold mb-2 text-white">Loan Calculator</h3>
+                  <p className="text-red-100">Estimate your payments</p>
                 </div>
-                <div className="bg-white rounded-2xl p-6">
+                <div className="bg-white/20 rounded-2xl p-6">
                   <div className="text-center">
-                    <div className="text-4xl font-bold text-red-600 mb-2">
+                    <div className="text-4xl font-bold text-red-400 mb-2">
                       ${calculateMonthlyPayment()}
                     </div>
-                    <div className="text-sm text-gray-500">Estimated Monthly Payment</div>
+                    <div className="text-sm text-white/80">Estimated Monthly Payment</div>
                   </div>
                 </div>
               </div>

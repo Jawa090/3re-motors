@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
@@ -159,7 +158,7 @@ const About = () => {
             <h2 className="text-4xl heading-font text-gray-900 mb-4">Meet Our Team</h2>
             <p className="text-xl body-font text-gray-600">The passionate people behind 3RE Motors</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
             {[
               {
                 name: "Usman Chaudhry",
@@ -170,7 +169,7 @@ const About = () => {
               {
                 name: "Muhammad Raiyan",
                 role: "COO",
-                image: "https://randomuser.me/api/portraits/men/77.jpg",
+                image: "/ryan.jpg",
                 description: "Chief Operating Officer ensuring smooth operations and exceptional customer experience."
               },
               {
@@ -182,21 +181,39 @@ const About = () => {
               {
                 name: "Asif Suleman Saigal",
                 role: "Head of Accounts",
-                image: "asif.jpg",
+                image: "/asif.jpg",
                 description: "Managing finances with precision and ensuring transparency in all transactions."
               }
             ].map((member, idx) => (
-              <div key={idx} className="bg-gradient-to-br from-red-50 via-white to-gray-100 rounded-2xl p-8 shadow-xl flex flex-col items-center group hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+              <div
+                key={idx}
+                className="relative bg-white rounded-2xl p-8 shadow-xl flex flex-col items-center group hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100"
+              >
+                {/* Profile Image with border and subtle ring */}
                 <div className="relative mb-6">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-40 h-40 rounded-full object-cover border-4 border-red-100 shadow-lg group-hover:scale-105 transition-transform duration-300"
-                  />
+                  <div className="w-36 h-36 rounded-full bg-gradient-to-tr from-red-100 via-white to-gray-200 flex items-center justify-center shadow-inner border-4 border-red-100 group-hover:border-red-400 transition-all duration-300">
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className="w-32 h-32 rounded-full object-cover object-center border-4 border-white shadow-lg group-hover:scale-105 transition-transform duration-300 bg-gray-100"
+                      style={{ background: "#fff", objectFit: "cover" }}
+                    />
+                  </div>
+                  <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-red-600 text-white text-xs font-bold rounded-full shadow">
+                    {member.role}
+                  </span>
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-1">{member.name}</h3>
-                <p className="text-red-600 font-semibold mb-2">{member.role}</p>
-                <p className="text-gray-600 text-center">{member.description}</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-1">{member.name}</h3>
+                <p className="text-gray-600 text-center mb-2">{member.description}</p>
+                {/* Social icons (example, replace with real links if needed) */}
+                <div className="flex gap-3 mt-2">
+                  <a href="#" className="text-red-400 hover:text-red-600 transition" aria-label="LinkedIn">
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-9h3v9zm-1.5-10.28c-.97 0-1.75-.79-1.75-1.75s.78-1.75 1.75-1.75 1.75.79 1.75 1.75-.78 1.75-1.75 1.75zm13.5 10.28h-3v-4.5c0-1.08-.02-2.47-1.5-2.47-1.5 0-1.73 1.17-1.73 2.39v4.58h-3v-9h2.89v1.23h.04c.4-.75 1.37-1.54 2.82-1.54 3.01 0 3.57 1.98 3.57 4.56v4.75z"/></svg>
+                  </a>
+                  <a href="#" className="text-red-400 hover:text-red-600 transition" aria-label="Email">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg>
+                  </a>
+                </div>
               </div>
             ))}
           </div>

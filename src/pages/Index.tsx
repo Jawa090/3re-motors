@@ -416,116 +416,106 @@ const Index = () => {
   return <div className="min-h-screen bg-gray-50">
       <Navigation />
 
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-        {/* Main Content Container */}
-        <div className="relative z-20 w-full max-w-7xl mx-auto px-4 py-16">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center min-h-[80vh]">
-            {/* Left Column - Tightly Stacked, Left-Aligned Text Content */}
-            <div className="relative text-left space-y-2 max-w-lg w-full">
-              {/* Premium Badge with Gold Gradient, Border, and Icons */}
-              <div className="flex items-center mb-2">
-                <span className="inline-flex items-center px-5 py-2 bg-gradient-to-r from-red-600 via-red-700 to-black border-2 border-red-600 rounded-full shadow-lg backdrop-blur-sm">
-                  <Award className="w-5 h-5 text-red-400 mr-2 animate-pulse" />
-                  <span className="text-red-100 font-bold tracking-wide uppercase text-sm drop-shadow">PREMIUM AUTOMOTIVE DEALER</span>
-                  <Star className="w-5 h-5 text-red-400 ml-2 animate-pulse" />
-                </span>
-              </div>
+      {/* HERO SECTION */}
+<section className="relative min-h-[420px] flex items-stretch bg-[#1a2236] overflow-hidden">
+  {/* Single Red angled stripe */}
+  <div className="absolute left-0 top-0 h-full w-32 z-10 flex items-start">
+    <div
+      className="w-24 h-[420px] bg-red-600"
+      style={{
+        transform: 'rotate(-22deg) translate(-30px, -40px)',
+        borderRadius: '8px',
+        boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
+      }}
+    />
+  </div>
+  {/* Large semi-transparent 3RE */}
+  <div className="absolute inset-0 flex items-center justify-end z-0 pointer-events-none select-none">
+    <span
+      style={{
+        fontSize: '350px',
+        fontWeight: 900,
+        color: 'rgba(255,255,255,0.04)',
+        letterSpacing: '-0.1em',
+        marginRight: '60px',
+        fontFamily: 'Montserrat, Poppins, Nunito Sans, Arial, sans-serif',
+        lineHeight: 1,
+      }}
+    >
+      3RE
+    </span>
+  </div>
+  {/* Main content */}
+  <div className="relative z-20 flex-1 flex flex-col justify-center pl-40 md:pl-56">
+    <h1 className="text-white text-2xl md:text-4xl font-extrabold uppercase mb-8 tracking-wide drop-shadow-lg leading-tight">
+  Sell, Purchase & Import All Types of Motor Vehicles
+</h1>
+    <a
+      href="/inventory"
+      className="bg-red-600 text-white px-8 py-3 rounded font-bold shadow hover:bg-red-700 transition w-max text-lg"
+      style={{ marginLeft: '4px' }}
+    >
+      View Inventory
+    </a>
+  </div>
+  {/* Car image */}
+  <div className="relative z-20 flex-1 flex items-end justify-end pr-16">
+    <img
+      src="/Car.png"
+      alt="Car"
+      className="w-[420px] h-auto object-contain drop-shadow-2xl"
+      style={{ maxHeight: 300 }}
+    />
+  </div>
+</section>
+{/* Bottom search bar */}
+<section className="bg-[#e9eef4] py-8 border-t border-gray-200">
+  <div className="max-w-2xl mx-auto flex flex-col items-center">
+    <h2 className="font-bold text-lg md:text-2xl mb-4 text-center tracking-wide text-[#1a2236]">
+      YOU CHOOSE YOUR CAR ONLINE. WE DELIVER IT.
+    </h2>
+    <form className="flex w-full max-w-xl gap-2">
+      <input
+        type="text"
+        placeholder="Enter Make, Model Or Body Style"
+        className="flex-1 px-4 py-2 rounded-l border border-gray-300 focus:outline-none"
+      />
+      <button
+        type="submit"
+        className="px-6 py-2 rounded-r bg-red-600 text-white font-bold"
+      >
+        Find Your Car
+      </button>
+    </form>
+  </div>
+</section>
 
-              {/* Subtle Glow/Blurred Background Shapes */}
-              <div className="absolute -z-10 left-0 top-0 w-80 h-80 bg-gradient-to-br from-red-200 via-red-100 to-transparent rounded-full blur-2xl opacity-40"></div>
-              <div className="absolute -z-10 right-0 top-10 w-40 h-40 bg-gradient-to-tr from-red-200 via-red-100 to-transparent rounded-full blur-2xl opacity-30"></div>
-
-              {/* Premium Heading with More Icons, Gold Gradient, Shadow, and Sparkle */}
-              <div className="space-y-0">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight drop-shadow-xl">
-                  <span className="flex items-center animate-[fade-in_1s_ease-out_0.5s_forwards] transform translate-y-8 text-white">
-                    <Shield className="w-8 h-8 lg:w-12 lg:h-12 mr-3 text-red-600 animate-pulse flex-shrink-0" />
-                    <span className="relative">Premium</span>
-                    <Gem className="w-7 h-7 ml-3 text-red-400 animate-bounce" />
-                  </span>
-                  <span className="flex items-center animate-[fade-in_1s_ease-out_1s_forwards] transform translate-y-8 bg-gradient-to-r from-red-600 via-red-700 to-black bg-clip-text text-transparent drop-shadow-lg">
-                    <Car className="w-8 h-8 lg:w-12 lg:h-12 mr-3 text-red-600 animate-bounce flex-shrink-0" />
-                    Cars
-                    <Sparkles className="w-6 h-6 ml-3 text-red-400 animate-spin-slow" />
-                  </span>
-                  <span className="flex items-center animate-[fade-in_1s_ease-out_1.5s_forwards] transform translate-y-8 text-white">
-                    Delivered
-                    <TrendingUp className="w-8 h-8 lg:w-12 lg:h-12 ml-3 text-red-600 animate-pulse flex-shrink-0" />
-                    <Shield className="w-6 h-6 ml-2 text-red-400 animate-bounce" />
-                  </span>
-                </h1>
-              </div>
-
-              <div className="text-base text-gray-300 font-medium leading-snug">Experience luxury, performance, and reliability<br/>with our curated collection of premium vehicles</div>
-
-              {/* Feature Pills with Icons */}
-              <div className="flex flex-wrap gap-2 mt-2">
-                <span className="flex items-center bg-black rounded px-2 py-1 text-xs font-semibold text-red-200"><Star className="w-4 h-4 mr-1 text-red-400" />Premium Quality</span>
-                <span className="flex items-center bg-black rounded px-2 py-1 text-xs font-semibold text-red-200"><Car className="w-4 h-4 mr-1 text-red-400" />500+ Vehicles</span>
-                <span className="flex items-center bg-black rounded px-2 py-1 text-xs font-semibold text-red-200"><Award className="w-4 h-4 mr-1 text-red-400" />Award Winning</span>
-                <span className="flex items-center bg-black rounded px-2 py-1 text-xs font-semibold text-red-200"><Shield className="w-4 h-4 mr-1 text-red-400" />Certified</span>
-                <span className="flex items-center bg-black rounded px-2 py-1 text-xs font-semibold text-red-200"><Clock className="w-4 h-4 mr-1 text-red-400" />Fast Delivery</span>
-                <span className="flex items-center bg-black rounded px-2 py-1 text-xs font-semibold text-red-200"><Users className="w-4 h-4 mr-1 text-red-400" />Expert Team</span>
-              </div>
-
-              <div className="flex gap-3 mt-4">
-                <a href="/inventory" className="bg-gradient-to-r from-red-600 via-red-700 to-black text-white px-5 py-2 rounded font-semibold text-base shadow-lg hover:from-red-700 hover:to-black transition">Explore Collection</a>
-                <a href="/sell-car" className="border-2 border-red-600 text-red-200 px-5 py-2 rounded font-semibold text-base hover:bg-red-700 hover:text-white transition">Sell Your Car</a>
-              </div>
-
-              <div className="flex gap-6 mt-4">
-                <div>
-                  <div className="text-xl font-bold text-red-400 flex items-center"><Car className="w-5 h-5 mr-1" />500+</div>
-                  <div className="text-xs text-red-200">Premium Cars</div>
-              </div>
-                <div>
-                  <div className="text-xl font-bold text-red-400 flex items-center"><Users className="w-5 h-5 mr-1" />10K+</div>
-                  <div className="text-xs text-red-200">Happy Customers</div>
-                  </div>
-                <div>
-                  <div className="text-xl font-bold text-red-400 flex items-center"><Clock className="w-5 h-5 mr-1" />24/7</div>
-                  <div className="text-xs text-red-200">Support</div>
-                </div>
-              </div>
-
-              <div className="mt-3 text-xs text-red-200">
-                <div className="font-semibold flex items-center"><Phone className="w-4 h-4 mr-1" />+1 (555) 123-4567</div>
-                <div className="flex items-center"><Mail className="w-4 h-4 mr-1" />info@3remotors.com</div>
-                <div className="flex items-center"><MapPin className="w-4 h-4 mr-1" />Nationwide Delivery</div>
-                </div>
-                </div>
-            {/* Right Column - Keep as is or empty for now */}
-            <div className="hidden lg:flex items-center justify-center relative h-[450px]">
-              <HeroCarsGrid cars={filteredCars} />
-            </div>
+      {/* Three Feature Boxes Section */}
+      <section className="w-full flex justify-center mt-8">
+        <div className="flex flex-col md:flex-row gap-6 max-w-5xl w-full justify-center items-center">
+          {/* Buy New One */}
+          <div className="flex-1 min-w-[260px] max-w-xs bg-[#e3342f] flex flex-col items-center justify-center p-8 min-h-[220px] text-center rounded-xl shadow-lg">
+            <h3 className="text-white text-lg md:text-xl font-extrabold uppercase mb-2 tracking-wide">BUY NEW ONE</h3>
+            <p className="text-white text-sm md:text-base mb-6">Multiple inspections. Free CARFAX® history report. Free limited warranty.</p>
+            <a href="/inventory" className="bg-[#19233a] text-white px-5 py-2 rounded font-semibold text-sm md:text-base shadow hover:bg-black transition">View Inventory</a>
+          </div>
+          {/* Sell Your Car */}
+          <div className="flex-1 min-w-[260px] max-w-xs bg-[#19233a] flex flex-col items-center justify-center p-8 min-h-[220px] text-center rounded-xl shadow-lg">
+            <h3 className="text-white text-lg md:text-xl font-extrabold uppercase mb-2 tracking-wide">SELL YOUR CAR</h3>
+            <p className="text-white text-sm md:text-base mb-6">No haggling. No hassles. An easy and efficient car buying process— the way it should be.</p>
+            <a href="/contact" className="bg-[#e3342f] text-white px-5 py-2 rounded font-semibold text-sm md:text-base shadow hover:bg-red-700 transition">Contact Us</a>
+          </div>
+          {/* Import Cars */}
+          <div className="flex-1 min-w-[260px] max-w-xs bg-[#a3a9ad] flex flex-col items-center justify-center p-8 min-h-[220px] text-center rounded-xl shadow-lg">
+            <h3 className="text-white text-lg md:text-xl font-extrabold uppercase mb-2 tracking-wide">IMPORT CARS</h3>
+            <p className="text-white text-sm md:text-base mb-6">Get your car or truck shipped to your home or a convenient nearby location.</p>
+            <a href="/contact" className="bg-[#19233a] text-white px-5 py-2 rounded font-semibold text-sm md:text-base shadow hover:bg-black transition">Submit Detail</a>
           </div>
         </div>
       </section>
 
       {/* Premium Vehicles Section */}
       <section className="py-24 bg-white">
-        {/* Update the search bar container to center the form */}
-        <div className="max-w-7xl mx-auto px-4 mb-10 flex flex-col items-center justify-center gap-4">
-          <form
-            className="flex w-full max-w-xl gap-2 justify-center"
-            onSubmit={e => { e.preventDefault(); }}
-          >
-            <input
-              type="text"
-              placeholder="Search by brand or model..."
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              className="flex-1 px-4 py-2 rounded-l-lg border border-red-300 focus:outline-none focus:ring-2 focus:ring-red-500 text-lg bg-white shadow"
-            />
-            <button
-              type="submit"
-              className="px-6 py-2 rounded-r-lg bg-gradient-to-r from-red-600 via-red-700 to-black text-white font-bold text-lg shadow hover:from-red-700 hover:to-black transition"
-            >
-              Find Cars
-            </button>
-          </form>
-        </div>
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
             <span className="inline-block px-4 py-2 bg-red-100 text-red-600 rounded-full text-sm font-medium mb-4">
@@ -537,93 +527,38 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
             {filteredFeaturedCars.length === 0 ? (
               <div className="col-span-full text-center text-xl text-red-600 py-12">
                 No cars found.
               </div>
             ) : (
               filteredFeaturedCars.map((car, index) => (
-                <Card key={car.id} className="overflow-hidden border-0 bg-white modern-card">
-                  <div className="relative overflow-hidden">
-                    <img src={car.image} alt={car.name} className="w-full h-64 object-cover" />
-                    {/* Badge only, no icons */}
-                    <div className="absolute top-4 left-4">
-                      <span className="bg-red-600 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
-                        {car.badge}
-                      </span>
+                <Link key={car.id} to={`/car/${car.id}`} className="block group">
+                  <div className="relative bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden w-full mx-auto flex flex-col cursor-pointer transition-transform group-hover:shadow-lg group-hover:scale-105">
+                    {/* Featured Badge */}
+                    <div className="absolute top-3 left-3 z-10">
+                      <span className="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded">Featured</span>
+                    </div>
+                    {/* Car Image */}
+                    <img src={car.image} alt={car.name} className="w-full h-40 object-cover" />
+                    {/* Card Content */}
+                    <div className="p-4 flex-1 flex flex-col justify-between">
+                      <div>
+                        <div className="text-xs text-red-500 font-semibold mb-1">{car.name.split(' ')[0]}</div>
+                        <div className="font-bold text-gray-900 mb-2 leading-tight text-sm md:text-base">{car.name}</div>
+                        <div className="grid grid-cols-2 gap-x-2 gap-y-1 text-xs text-gray-600 mb-2">
+                          <div className="flex items-center gap-1"><span>⛽</span>{car.specs.fuel}</div>
+                          <div className="flex items-center gap-1"><span>🔧</span>{car.specs.engine}</div>
+                          <div className="flex items-center gap-1"><span>🛣️</span>{car.specs.mileage}</div>
+                          <div className="flex items-center gap-1"><span>🚗</span>{car.badge}</div>
+                          <div className="flex items-center gap-1"><span>🎨</span>Silver</div>
+                        </div>
+                      </div>
+                      <div className="font-bold text-lg text-red-600 mt-2">{car.price}</div>
                     </div>
                   </div>
-                  <CardContent className="p-4">
-                    {/* Car Title and Price */}
-                    <div className="flex justify-between items-start mb-4">
-                      <div>
-                        <h3 className="text-2xl font-bold text-gray-900 mb-1">{car.name}</h3>
-                        <p className="text-gray-600 text-sm">{car.year} • {car.location}</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-2xl font-bold text-red-600">{car.price}</p>
-                        {car.originalPrice && <p className="text-sm text-gray-500 line-through">{car.originalPrice}</p>}
-                      </div>
-                    </div>
-                    {/* Rating and Reviews */}
-                    <div className="flex items-center mb-4">
-                      <div className="flex text-yellow-400 mr-2">
-                        {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-current" />)}
-                      </div>
-                      <span className="text-sm text-gray-600">
-                        {car.rating} ({car.reviews} reviews)
-                      </span>
-                    </div>
-                    {/* Specifications */}
-                    <div className="grid grid-cols-2 gap-3 mb-6">
-                      <div className="flex items-center space-x-2 text-sm text-gray-600">
-                        <Settings className="w-4 h-4 text-gray-400" />
-                        <span>{car.specs.engine}</span>
-                      </div>
-                      <div className="flex items-center space-x-2 text-sm text-gray-600">
-                        <Fuel className="w-4 h-4 text-gray-400" />
-                        <span>{car.specs.fuel}</span>
-                      </div>
-                      <div className="flex items-center space-x-2 text-sm text-gray-600">
-                        <Gauge className="w-4 h-4 text-gray-400" />
-                        <span>{car.specs.mileage}</span>
-                      </div>
-                      <div className="flex items-center space-x-2 text-sm text-gray-600">
-                        <Settings className="w-4 h-4 text-gray-400" />
-                        <span>{car.specs.transmission}</span>
-                      </div>
-                    </div>
-                    {/* Key Features */}
-                    <div className="mb-6">
-                      <div className="flex flex-wrap gap-2">
-                        {car.features.slice(0, 3).map((feature, featureIndex) => (
-                          <span key={featureIndex} className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs font-medium">
-                            {feature}
-                          </span>
-                        ))}
-                        {car.features.length > 3 && (
-                          <span className="bg-red-100 text-red-600 px-2 py-1 rounded-full text-xs font-medium">
-                            +{car.features.length - 3} more
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                    {/* Action Buttons */}
-                    <div className="flex space-x-4 mt-4">
-                      <Link to={`/car/${car.id}`} className="flex-1">
-                        <Button className="w-full h-12 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl transform hover:scale-105 transition-all duration-300 shadow-lg">
-                          View Details
-                        </Button>
-                      </Link>
-                      <Link to="/contact">
-                        <Button variant="outline" className="h-12 px-6 border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-semibold rounded-xl transform hover:scale-105 transition-all duration-300">
-                          Contact
-                        </Button>
-                      </Link>
-                    </div>
-                  </CardContent>
-                </Card>
+                </Link>
               ))
             )}
           </div>
@@ -634,6 +569,49 @@ const Index = () => {
                 View All 500+ Vehicles
               </Button>
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 3RE MOTORS VALUES Section */}
+      <section className="max-w-7xl mx-auto px-4 py-20">
+        <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 mb-8 tracking-wide">3RE MOTORS VALUES</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Card 1 */}
+          <div className="bg-blue-50 border border-gray-200 rounded-xl p-6">
+            <div className="text-xs text-red-500 font-bold mb-1">Price</div>
+            <div className="font-bold text-lg text-gray-900 mb-1">No haggling. No pressure.</div>
+            <div className="text-gray-600 text-sm">We've eliminated the middleman and made the entire car buying process more efficient, which allows us to pass the savings on to our customers.</div>
+          </div>
+          {/* Card 2 */}
+          <div className="bg-white border border-gray-200 rounded-xl p-6">
+            <div className="text-xs text-red-500 font-bold mb-1">Reconditioning</div>
+            <div className="font-bold text-lg text-gray-900 mb-1">Multiple Inspections</div>
+            <div className="text-gray-600 text-sm">Our cars are inspected for safety, mechanical and cosmetic issues. We only sell cars that have accident-free CARFAX vehicle history reports at the time of purchase and sale.</div>
+          </div>
+          {/* Card 3 */}
+          <div className="bg-white border border-gray-200 rounded-xl p-6">
+            <div className="text-xs text-red-500 font-bold mb-1">Finance</div>
+            <div className="font-bold text-lg text-gray-900 mb-1">Get a Competitive Rate</div>
+            <div className="text-gray-600 text-sm">We've eliminated the middleman and made the entire car buying process more efficient, which allows us to pass the savings on to our customers.</div>
+          </div>
+          {/* Card 4 */}
+          <div className="bg-white border border-gray-200 rounded-xl p-6">
+            <div className="text-xs text-red-500 font-bold mb-1">Delivery to you</div>
+            <div className="font-bold text-lg text-gray-900 mb-1">Delivery Straight to You</div>
+            <div className="text-gray-600 text-sm">Our cars are inspected for safety, mechanical and cosmetic issues. We only sell cars that have accident-free CARFAX vehicle history reports at the time of purchase and sale.</div>
+          </div>
+          {/* Card 5 */}
+          <div className="bg-white border border-gray-200 rounded-xl p-6">
+            <div className="text-xs text-red-500 font-bold mb-1">7 Days Returns</div>
+            <div className="font-bold text-lg text-gray-900 mb-1">7 Days to Decide</div>
+            <div className="text-gray-600 text-sm">We've eliminated the middleman and made the entire car buying process more efficient, which allows us to pass the savings on to our customers.</div>
+          </div>
+          {/* Card 6 */}
+          <div className="bg-white border border-gray-200 rounded-xl p-6">
+            <div className="text-xs text-red-500 font-bold mb-1">Coverage</div>
+            <div className="font-bold text-lg text-gray-900 mb-1">Free Limited Warranty</div>
+            <div className="text-gray-600 text-sm">Our cars are inspected for safety, mechanical and cosmetic issues. We only sell cars that have accident-free CARFAX vehicle history reports at the time of purchase and sale.</div>
           </div>
         </div>
       </section>
@@ -770,6 +748,50 @@ const Index = () => {
 
       {/* Animated Car Brands */}
       <AnimatedCarBrands />
+
+      {/* Shop Popular Models Section */}
+      <section className="py-16 bg-gradient-to-b from-white to-gray-50">
+        <div className="max-w-6xl mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-extrabold tracking-wide text-gray-900 mb-4 uppercase text-center" style={{letterSpacing: '0.02em'}}>SHOP POPULAR MODELS</h2>
+          <div className="flex justify-center mb-10">
+            <div className="h-1 w-24 bg-red-500 rounded-full"></div>
+          </div>
+          <div className="rounded-2xl shadow-xl bg-white/90 p-8 md:p-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-4 gap-x-12 text-lg">
+            <div className="space-y-2 text-gray-500 font-medium">
+              <div>Acura MDX</div>
+              <div>Audi Q5</div>
+              <div>BMW 4-Series</div>
+              <div>Chevrolet Camaro</div>
+              <div>Chevrolet Corvette</div>
+              <div>Chevrolet Silverado 1500</div>
+            </div>
+            <div className="space-y-2 text-gray-500 font-medium">
+              <div>Chevrolet Tahoe</div>
+              <div>Dodge Challenger</div>
+              <div>Dodge Charger</div>
+              <div>Ford Explorer</div>
+              <div>Ford F-150</div>
+              <div>Ford F-250 Super-Duty</div>
+            </div>
+            <div className="space-y-2 text-gray-500 font-medium">
+              <div>Jeep Grand-Cherokee</div>
+              <div>Jeep Wrangler</div>
+              <div>Jeep Wrangler Unlimited</div>
+              <div>Lexus RX-350</div>
+              <div>Mazda CX-5</div>
+              <div>Nissan Maxima</div>
+            </div>
+            <div className="space-y-2 text-gray-500 font-medium">
+              <div>Jeep Grand-Cherokee</div>
+              <div>Jeep Wrangler</div>
+              <div>Jeep Wrangler Unlimited</div>
+              <div>Lexus RX-350</div>
+              <div>Mazda CX-5</div>
+              <div>Nissan Maxima</div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Enhanced Customer Reviews */}
       <section className="py-24 bg-gray-50">
