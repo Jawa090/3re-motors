@@ -6,7 +6,7 @@ import AnimatedCarBrands from '@/components/AnimatedCarBrands';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import HeroCarSlider from '@/components/HeroCarSlider';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 const Index = () => {
   const [counters, setCounters] = useState({
     delivered: 0,
@@ -312,6 +312,8 @@ const Index = () => {
   ];
   // Add state for search
   const [search, setSearch] = React.useState("");
+  const navigate = useNavigate();
+  const [heroSearch, setHeroSearch] = useState("");
   // Compute filteredCars in Index
   const filteredCars = search.trim()
     ? heroCars.filter(car => car.name.toLowerCase().includes(search.trim().toLowerCase()))
@@ -320,6 +322,15 @@ const Index = () => {
   const filteredFeaturedCars = search.trim()
     ? featuredCars.filter(car => car.name.toLowerCase().includes(search.trim().toLowerCase()))
     : featuredCars;
+  // Add this filtered array for home page search results
+  const filteredHomeCars = heroSearch.trim()
+    ? featuredCars.filter(car =>
+        car.name.toLowerCase().includes(heroSearch.trim().toLowerCase()) ||
+        car.specs.engine.toLowerCase().includes(heroSearch.trim().toLowerCase()) ||
+        car.specs.fuel.toLowerCase().includes(heroSearch.trim().toLowerCase()) ||
+        car.badge.toLowerCase().includes(heroSearch.trim().toLowerCase())
+      )
+    : [];
   // Replace AnimatedHeroCars with a grid display
   function HeroCarsGrid({ cars }) {
     const [start, setStart] = React.useState(0);
@@ -396,7 +407,7 @@ const Index = () => {
             </div>
           </div>
           <div className="relative">
-            <img src="https://images.unsplash.com/photo-1562141961-5cb7cafd8deb?w=600&h=400&fit=crop" alt="Modern car showroom" className="rounded-2xl shadow-2xl" />
+            <img src="/showroom.jpg" alt="Modern car showroom" className="rounded-2xl shadow-2xl" />
             <div className="absolute -bottom-6 -right-6 bg-white p-6 rounded-xl shadow-lg">
               <div className="flex items-center space-x-3">
                 <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
@@ -474,11 +485,20 @@ const Index = () => {
     <h2 className="font-bold text-lg md:text-2xl mb-4 text-center tracking-wide text-[#1a2236]">
       YOU CHOOSE YOUR CAR ONLINE. WE DELIVER IT.
     </h2>
-    <form className="flex w-full max-w-xl gap-2">
+    <form className="flex w-full max-w-xl gap-2" onSubmit={e => {
+      e.preventDefault();
+      if (heroSearch.trim()) {
+        navigate(`/inventory?search=${encodeURIComponent(heroSearch.trim())}`);
+      } else {
+        navigate('/inventory');
+      }
+    }}>
       <input
         type="text"
         placeholder="Enter Make, Model Or Body Style"
         className="flex-1 px-4 py-2 rounded-l border border-gray-300 focus:outline-none"
+        value={heroSearch}
+        onChange={e => setHeroSearch(e.target.value)}
       />
       <button
         type="submit"
@@ -487,6 +507,28 @@ const Index = () => {
         Find Your Car
       </button>
     </form>
+    {/* Show search results below the search bar if there is a search */}
+    {heroSearch.trim() && (
+      <div className="w-full mt-8">
+        {filteredHomeCars.length === 0 ? (
+          <div className="text-center text-red-600 text-lg font-semibold">No cars found.</div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {filteredHomeCars.map(car => (
+              <div key={car.id} className="bg-white rounded-xl shadow p-4 flex flex-col md:flex-row gap-4 items-center">
+                <img src={car.image} alt={car.name} className="w-32 h-20 object-cover rounded-lg" />
+                <div className="flex-1">
+                  <div className="font-bold text-gray-900 text-lg">{car.name}</div>
+                  <div className="text-gray-600 text-sm">{car.specs.engine} | {car.specs.fuel} | {car.badge}</div>
+                  <div className="text-red-600 font-bold mt-1">{car.price}</div>
+                </div>
+                <Link to={`/car/${car.id}`} className="bg-red-600 text-white px-4 py-2 rounded font-semibold text-sm hover:bg-red-700 transition">View Details</Link>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    )}
   </div>
 </section>
 

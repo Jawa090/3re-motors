@@ -6,45 +6,17 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import { cars } from '../lib/cars';
 
 const CarDetails = () => {
   const { id } = useParams();
+  const car = cars.find(c => c.id === parseInt(id || '0'));
+  if (!car) {
+    return <div className="min-h-screen bg-gray-50 flex items-center justify-center text-2xl text-red-600">Car not found.</div>;
+  }
 
-  // Sample car data - in a real app, this would come from an API
-  const car = {
-    id: parseInt(id || '1'),
-    name: 'BMW X5 M Sport',
-    year: 2023,
-    price: 75000,
-    originalPrice: 82000,
-    images: [
-      'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1584345604476-8ec5e12e42dd?w=800&h=600&fit=crop'
-    ],
-    brand: 'BMW',
-    model: 'X5',
-    mileage: 8500,
-    fuel: 'Petrol',
-    transmission: 'Automatic',
-    engine: '3.0L V6 Turbo',
-    location: 'New York, NY',
-    badges: ['Premium', 'Low Miles'],
-    features: ['Leather Seats', 'Sunroof', 'Navigation', 'Backup Camera', 'Heated Seats', 'Bluetooth', 'USB Ports', 'Cruise Control'],
-    description: 'This stunning BMW X5 M Sport represents the perfect blend of luxury and performance. With its powerful 3.0L V6 turbo engine and advanced features, this vehicle delivers an exceptional driving experience. Meticulously maintained with low mileage, it comes with comprehensive warranty coverage.',
-    specifications: {
-      'Engine Type': '3.0L V6 Turbo',
-      'Horsepower': '335 HP',
-      'Torque': '330 lb-ft',
-      'Fuel Economy': '22 city / 29 highway MPG',
-      'Drivetrain': 'All-Wheel Drive',
-      'Seating Capacity': '7 passengers',
-      'Cargo Space': '72.3 cubic feet',
-      'Safety Rating': '5 stars'
-    }
-  };
-
+  // Use gallery for images
+  const carImages = car.gallery;
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
 
   return (
@@ -77,11 +49,11 @@ const CarDetails = () => {
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
           {/* Image Gallery */}
           <div className="space-y-4 animate-slide-in-left">
-            <div className="relative overflow-hidden rounded-3xl bg-white shadow-2xl modern-card">
+            <div className="relative overflow-hidden rounded-3xl bg-white shadow-2xl modern-card flex items-center justify-center" style={{minHeight: '400px', height: 'auto'}}>
               <img 
-                src={car.images[currentImageIndex]} 
+                src={carImages[currentImageIndex]} 
                 alt={car.name}
-                className="w-full h-96 md:h-[500px] object-cover"
+                className="max-h-[500px] w-auto h-auto object-contain mx-auto"
               />
               <div className="absolute top-6 left-6 flex flex-wrap gap-2">
                 {car.badges.map((badge, index) => (
@@ -90,27 +62,21 @@ const CarDetails = () => {
                   </Badge>
                 ))}
               </div>
-              <div className="absolute top-6 right-6">
-                <div className="flex items-center space-x-1 bg-black/50 backdrop-blur-sm rounded-full px-3 py-1">
-                  <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                  <span className="text-white text-sm font-medium">4.9</span>
-                </div>
-              </div>
             </div>
-            
-            <div className="grid grid-cols-4 gap-3">
-              {car.images.map((image, index) => (
+            {/* Horizontal scroller for images */}
+            <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 mt-2">
+              {carImages.map((image, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentImageIndex(index)}
-                  className={`relative overflow-hidden rounded-xl transition-all duration-300 modern-card ${
-                    currentImageIndex === index ? 'ring-4 ring-red-600 scale-105' : 'hover:scale-105'
+                  className={`flex-shrink-0 w-24 h-20 md:w-32 md:h-28 overflow-hidden rounded-xl transition-all duration-300 modern-card border-2 ${
+                    currentImageIndex === index ? 'border-red-600 scale-105' : 'border-transparent hover:scale-105'
                   }`}
                 >
                   <img 
                     src={image} 
                     alt={`${car.name} ${index + 1}`}
-                    className="w-full h-20 md:h-24 object-cover"
+                    className="w-full h-full object-cover"
                   />
                 </button>
               ))}
@@ -136,11 +102,7 @@ const CarDetails = () => {
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-3xl md:text-4xl font-bold text-red-600">${car.price.toLocaleString()}</p>
-                  {car.originalPrice > car.price && (
-                    <p className="text-lg text-gray-500 line-through">${car.originalPrice.toLocaleString()}</p>
-                  )}
-                  <p className="text-sm text-green-600 font-medium">Save ${(car.originalPrice - car.price).toLocaleString()}</p>
+                   {/* Price removed as requested */}
                 </div>
               </div>
 
@@ -176,15 +138,11 @@ const CarDetails = () => {
                 <p className="text-gray-600 leading-relaxed responsive-text">{car.description}</p>
               </div>
 
-              <div className="mt-8 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                <Button className="flex-1 bg-red-600 hover:bg-red-700 text-lg py-4 rounded-2xl glow-button modern-card">
+              <div className="mt-8 flex flex-col items-center justify-center">
+                <a href="tel:03452221114" className="bg-red-600 hover:bg-red-700 text-lg py-4 px-8 rounded-2xl glow-button modern-card flex items-center justify-center font-bold text-white transition-colors">
                   <Phone className="w-5 h-5 mr-2" />
                   Call Dealer
-                </Button>
-                <Button variant="outline" className="flex-1 border-red-600 text-red-600 hover:bg-red-600 hover:text-white text-lg py-4 rounded-2xl modern-card">
-                  <Mail className="w-5 h-5 mr-2" />
-                  Email Inquiry
-                </Button>
+                </a>
               </div>
             </div>
 

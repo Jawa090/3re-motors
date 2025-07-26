@@ -5,330 +5,26 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
 import { Badge } from '@/components/ui/badge';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import { cars } from '../lib/cars';
 
 const Inventory = () => {
+  const location = useLocation();
+  function getQueryParam(param) {
+    const params = new URLSearchParams(location.search);
+    return params.get(param) || '';
+  }
   const [priceRange, setPriceRange] = useState([0, 100000]);
   const [yearRange, setYearRange] = useState([2015, 2024]);
   const [mileageRange, setMileageRange] = useState([0, 50000]);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(getQueryParam('search'));
   const [make, setMake] = useState("");
   const [fuel, setFuel] = useState("");
   const [transmission, setTransmission] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const carsPerPage = 12;
-
-  const cars = [
-    {
-      id: 1,
-      name: 'BMW X5 M Sport',
-      year: 2023,
-      price: 75000,
-      originalPrice: 82000,
-      image: 'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&h=600&fit=crop',
-      brand: 'BMW',
-      model: 'X5',
-      mileage: 8500,
-      fuel: 'Petrol',
-      transmission: 'Automatic',
-      engine: '3.0L V6 Turbo',
-      location: 'New York, NY',
-      badges: ['Premium', 'Low Miles'],
-      features: ['Leather Seats', 'Sunroof', 'Navigation', 'Backup Camera']
-    },
-    {
-      id: 2,
-      name: 'Mercedes-Benz C-Class AMG',
-      year: 2023,
-      price: 68000,
-      originalPrice: 72000,
-      image: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&h=600&fit=crop',
-      brand: 'Mercedes',
-      model: 'C-Class',
-      mileage: 5200,
-      fuel: 'Petrol',
-      transmission: 'Automatic',
-      engine: '2.0L Turbo',
-      location: 'Los Angeles, CA',
-      badges: ['Featured', 'Best Deal'],
-      features: ['Premium Sound', 'Heated Seats', 'Wireless Charging', 'LED Lights']
-    },
-    {
-      id: 3,
-      name: 'Toyota Camry Hybrid',
-      year: 2024,
-      price: 32000,
-      originalPrice: 35000,
-      image: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=800&h=600&fit=crop',
-      brand: 'Toyota',
-      model: 'Camry',
-      mileage: 2800,
-      fuel: 'Hybrid',
-      transmission: 'CVT',
-      engine: '2.5L Hybrid',
-      location: 'Chicago, IL',
-      badges: ['Eco-Friendly', 'New'],
-      features: ['Hybrid Engine', 'Apple CarPlay', 'Safety Sense', 'Adaptive Cruise']
-    },
-    {
-      id: 4,
-      name: 'Honda Accord Sport',
-      year: 2023,
-      price: 34000,
-      originalPrice: 38000,
-      image: 'https://images.unsplash.com/photo-1606152421802-db97b9c7a11b?w=800&h=600&fit=crop',
-      brand: 'Honda',
-      model: 'Accord',
-      mileage: 12000,
-      fuel: 'Petrol',
-      transmission: 'Manual',
-      engine: '2.0L Turbo',
-      location: 'Miami, FL',
-      badges: ['Sport', 'Manual'],
-      features: ['Sport Suspension', 'Racing Stripes', 'Performance Tires', 'Bose Audio']
-    },
-    {
-      id: 5,
-      name: 'Audi Q7 Prestige',
-      year: 2023,
-      price: 85000,
-      originalPrice: 92000,
-      image: 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&h=600&fit=crop',
-      brand: 'Audi',
-      model: 'Q7',
-      mileage: 6800,
-      fuel: 'Petrol',
-      transmission: 'Automatic',
-      engine: '3.0L V6 Supercharged',
-      location: 'Dallas, TX',
-      badges: ['Luxury', 'Premium'],
-      features: ['Quattro AWD', 'Virtual Cockpit', 'Massage Seats', 'Bang & Olufsen']
-    },
-    {
-      id: 6,
-      name: 'Ford Mustang GT',
-      year: 2022,
-      price: 42000,
-      originalPrice: 47000,
-      image: 'https://images.unsplash.com/photo-1584345604476-8ec5e12e42dd?w=800&h=600&fit=crop',
-      brand: 'Ford',
-      model: 'Mustang',
-      mileage: 18000,
-      fuel: 'Petrol',
-      transmission: 'Manual',
-      engine: '5.0L V8',
-      location: 'Phoenix, AZ',
-      badges: ['Performance', 'V8 Power'],
-      features: ['V8 Engine', 'Performance Package', 'Recaro Seats', 'Track Apps']
-    },
-    // Pakistani market cars
-    {
-      id: 7,
-      name: 'Suzuki Mehran VX',
-      year: 2017,
-      price: 6500,
-      originalPrice: 7000,
-      image: '/public/alto.webp',
-      brand: 'Suzuki',
-      model: 'Mehran',
-      mileage: 45000,
-      fuel: 'Petrol',
-      transmission: 'Manual',
-      engine: '0.8L',
-      location: 'Lahore, PK',
-      badges: ['Popular', 'Economy'],
-      features: ['Manual Windows', 'Basic Interior']
-    },
-    {
-      id: 8,
-      name: 'Suzuki Alto VXR',
-      year: 2022,
-      price: 12000,
-      originalPrice: 13000,
-      image: '/public/alto.webp',
-      brand: 'Suzuki',
-      model: 'Alto',
-      mileage: 12000,
-      fuel: 'Petrol',
-      transmission: 'Manual',
-      engine: '0.7L',
-      location: 'Karachi, PK',
-      badges: ['Economy', 'New'],
-      features: ['AC', 'Power Steering']
-    },
-    {
-      id: 9,
-      name: 'Suzuki Cultus VXL',
-      year: 2021,
-      price: 15000,
-      originalPrice: 16000,
-      image: '/public/diz.jpg',
-      brand: 'Suzuki',
-      model: 'Cultus',
-      mileage: 18000,
-      fuel: 'Petrol',
-      transmission: 'Manual',
-      engine: '1.0L',
-      location: 'Islamabad, PK',
-      badges: ['Popular', 'Family'],
-      features: ['Power Windows', 'ABS']
-    },
-    {
-      id: 10,
-      name: 'Suzuki WagonR VXL',
-      year: 2020,
-      price: 14000,
-      originalPrice: 15000,
-      image: '/public/pp.jpg',
-      brand: 'Suzuki',
-      model: 'WagonR',
-      mileage: 25000,
-      fuel: 'Petrol',
-      transmission: 'Manual',
-      engine: '1.0L',
-      location: 'Faisalabad, PK',
-      badges: ['Economy', 'Family'],
-      features: ['Power Steering', 'Spacious']
-    },
-    {
-      id: 11,
-      name: 'Suzuki Bolan VX',
-      year: 2019,
-      price: 9000,
-      originalPrice: 9500,
-      image: '/public/pp.jpg',
-      brand: 'Suzuki',
-      model: 'Bolan',
-      mileage: 35000,
-      fuel: 'Petrol',
-      transmission: 'Manual',
-      engine: '0.8L',
-      location: 'Multan, PK',
-      badges: ['Utility', 'Popular'],
-      features: ['Spacious', 'Manual']
-    },
-    {
-      id: 12,
-      name: 'Toyota Corolla Altis',
-      year: 2022,
-      price: 25000,
-      originalPrice: 27000,
-      image: '/public/city.webp',
-      brand: 'Toyota',
-      model: 'Corolla',
-      mileage: 15000,
-      fuel: 'Petrol',
-      transmission: 'Automatic',
-      engine: '1.6L',
-      location: 'Lahore, PK',
-      badges: ['Best Seller', 'Family'],
-      features: ['ABS', 'Airbags', 'Cruise Control']
-    },
-    {
-      id: 13,
-      name: 'Honda Civic Oriel',
-      year: 2021,
-      price: 32000,
-      originalPrice: 34000,
-      image: '/public/civic.avif',
-      brand: 'Honda',
-      model: 'Civic',
-      mileage: 20000,
-      fuel: 'Petrol',
-      transmission: 'Automatic',
-      engine: '1.8L',
-      location: 'Karachi, PK',
-      badges: ['Premium', 'Popular'],
-      features: ['Sunroof', 'Cruise Control', 'ABS']
-    },
-    {
-      id: 14,
-      name: 'Honda City Aspire',
-      year: 2020,
-      price: 21000,
-      originalPrice: 22000,
-      image: '/public/city.webp',
-      brand: 'Honda',
-      model: 'City',
-      mileage: 22000,
-      fuel: 'Petrol',
-      transmission: 'Manual',
-      engine: '1.3L',
-      location: 'Rawalpindi, PK',
-      badges: ['Family', 'Popular'],
-      features: ['ABS', 'Power Windows']
-    },
-    {
-      id: 15,
-      name: 'Kia Sportage AWD',
-      year: 2023,
-      price: 45000,
-      originalPrice: 47000,
-      image: '/public/kiaaa.avif',
-      brand: 'Kia',
-      model: 'Sportage',
-      mileage: 8000,
-      fuel: 'Petrol',
-      transmission: 'Automatic',
-      engine: '2.0L',
-      location: 'Islamabad, PK',
-      badges: ['SUV', 'New'],
-      features: ['AWD', 'Sunroof', 'Touchscreen']
-    },
-    {
-      id: 16,
-      name: 'Hyundai Tucson GLS',
-      year: 2023,
-      price: 47000,
-      originalPrice: 49000,
-      image: '/public/tucson.avif',
-      brand: 'Hyundai',
-      model: 'Tucson',
-      mileage: 7000,
-      fuel: 'Petrol',
-      transmission: 'Automatic',
-      engine: '2.0L',
-      location: 'Lahore, PK',
-      badges: ['SUV', 'New'],
-      features: ['AWD', 'Touchscreen', 'ABS']
-    },
-    {
-      id: 17,
-      name: 'Changan Alsvin Lumiere',
-      year: 2022,
-      price: 18000,
-      originalPrice: 19000,
-      image: '/public/les.jpg',
-      brand: 'Changan',
-      model: 'Alsvin',
-      mileage: 10000,
-      fuel: 'Petrol',
-      transmission: 'Automatic',
-      engine: '1.5L',
-      location: 'Karachi, PK',
-      badges: ['Sedan', 'New'],
-      features: ['Sunroof', 'Touchscreen', 'ABS']
-    },
-    {
-      id: 18,
-      name: 'Suzuki Swift GLX',
-      year: 2022,
-      price: 17000,
-      originalPrice: 18000,
-      image: '/public/sedan.webp',
-      brand: 'Suzuki',
-      model: 'Swift',
-      mileage: 9000,
-      fuel: 'Petrol',
-      transmission: 'Automatic',
-      engine: '1.2L',
-      location: 'Lahore, PK',
-      badges: ['Hatchback', 'New'],
-      features: ['Touchscreen', 'ABS', 'Alloy Wheels']
-    },
-  ];
 
   // Get all unique brands from the cars array for the Make filter
   const uniqueBrands = Array.from(new Set(cars.map(car => car.brand)));
@@ -636,29 +332,39 @@ const Inventory = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {paginatedCars.map((car) => (
             <Link key={car.id} to={`/car/${car.id}`} className="block group">
-              <div className="relative bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden w-full mx-auto flex flex-col cursor-pointer transition-transform group-hover:shadow-lg group-hover:scale-105">
+              <div className="relative bg-white rounded-3xl border border-gray-200 shadow-xl overflow-hidden w-full mx-auto flex flex-col cursor-pointer transition-transform duration-300 group-hover:shadow-2xl group-hover:scale-105 min-h-[420px] h-[480px] max-w-xs mx-auto">
                 {/* Featured Badge */}
                 {car.badges && car.badges.length > 0 && (
                   <div className="absolute top-3 left-3 z-10">
-                    <span className="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded">{car.badges[0]}</span>
+                    <span className="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded shadow">{car.badges[0]}</span>
                   </div>
                 )}
                 {/* Car Image */}
-                <img src={car.image} alt={car.name} className="w-full h-40 object-cover" />
+                <div className="w-full h-56 bg-gray-100 flex items-center justify-center overflow-hidden">
+                  <img src={car.image} alt={car.name} className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110" />
+                </div>
                 {/* Card Content */}
-                <div className="p-4 flex-1 flex flex-col justify-between">
+                <div className="p-6 flex-1 flex flex-col justify-between">
                   <div>
-                    <div className="text-xs text-red-500 font-semibold mb-1">{car.brand}</div>
-                    <div className="font-bold text-gray-900 mb-2 leading-tight text-sm md:text-base">{car.name}</div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-xs text-red-500 font-semibold uppercase tracking-wide">{car.brand}</span>
+                      <span className="text-xs text-gray-400">|</span>
+                      <span className="text-xs text-gray-600 font-medium">{car.model}</span>
+                    </div>
+                    <div className="font-bold text-xl text-gray-900 mb-2 leading-tight">{car.name}</div>
                     <div className="grid grid-cols-2 gap-x-2 gap-y-1 text-xs text-gray-600 mb-2">
                       <div className="flex items-center gap-1"><span>⛽</span>{car.fuel}</div>
-                      <div className="flex items-center gap-1"><span>🔧</span>{car.engine}</div>
-                      <div className="flex items-center gap-1"><span>🛣️</span>{car.mileage.toLocaleString()} mi</div>
-                      <div className="flex items-center gap-1"><span>🚗</span>{car.model}</div>
-                      <div className="flex items-center gap-1"><span>🎨</span>Silver</div>
+                      <div className="flex items-center gap-1"><span>🛣️</span>{car.mileage.toLocaleString()} km</div>
+                      {car.id === 1002 ? (
+                        <div className="flex items-center gap-1"><span className='inline-block w-3 h-3 rounded-full mr-1' style={{background:'#888',border:'1px solid #ccc'}}></span>Silky Grey</div>
+                      ) : (
+                        <div className="flex items-center gap-1"><span className='inline-block w-3 h-3 rounded-full mr-1' style={{background:'#fff',border:'1px solid #ccc'}}></span>Pearl White</div>
+                      )}
                     </div>
                   </div>
-                  <div className="font-bold text-lg text-red-600 mt-2">${car.price.toLocaleString()}</div>
+                  <div className="font-bold text-xl text-red-600 mt-4">
+                    {car.price && car.price > 0 ? `$${car.price.toLocaleString()}` : 'Call for Price'}
+                  </div>
                 </div>
               </div>
             </Link>
