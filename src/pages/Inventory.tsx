@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { Search, Filter, Car, Heart, Eye, Fuel, Gauge, Calendar, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,6 +9,7 @@ import { Link, useLocation } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { cars } from '../lib/cars';
+type Car = typeof cars[number];
 
 const Inventory = () => {
   const location = useLocation();
@@ -330,44 +331,40 @@ const Inventory = () => {
 
         {/* Enhanced Car Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {paginatedCars.map((car) => (
-            <Link key={car.id} to={`/car/${car.id}`} className="block group">
-              <div className="relative bg-white rounded-3xl border border-gray-200 shadow-xl overflow-hidden w-full mx-auto flex flex-col cursor-pointer transition-transform duration-300 group-hover:shadow-2xl group-hover:scale-105 min-h-[420px] h-[480px] max-w-xs mx-auto">
-                {/* Featured Badge */}
-                {car.badges && car.badges.length > 0 && (
-                  <div className="absolute top-3 left-3 z-10">
-                    <span className="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded shadow">{car.badges[0]}</span>
+          {/* Hardcoded Toyota Raize Z - 2020 card */}
+          <Link key={1004} to="/car/1004" className="block group">
+            <div className="relative bg-white rounded-3xl border border-gray-200 shadow-xl overflow-hidden w-full mx-auto flex flex-col cursor-pointer transition-transform duration-300 group-hover:shadow-2xl group-hover:scale-105 min-h-[420px] h-[480px] max-w-xs mx-auto">
+              {/* Featured Badge */}
+              <div className="absolute top-3 left-3 z-10">
+                <span className="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded shadow">Used</span>
+              </div>
+              {/* Car Image */}
+              <div className="w-full h-56 bg-gray-100 flex items-center justify-center overflow-hidden">
+                <img src="/Toyota Raize XS - 2020/1.jpg" alt="Toyota Raize Z - 2020" className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110" />
+              </div>
+              {/* Card Content */}
+              <div className="p-6 flex-1 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-xs text-red-500 font-semibold uppercase tracking-wide">Toyota</span>
+                    <span className="text-xs text-gray-400">|</span>
+                    <span className="text-xs text-gray-600 font-medium">Raize Z</span>
                   </div>
-                )}
-                {/* Car Image */}
-                <div className="w-full h-56 bg-gray-100 flex items-center justify-center overflow-hidden">
-                  <img src={car.image} alt={car.name} className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110" />
+                  <div className="font-bold text-xl text-gray-900 mb-2 leading-tight">Toyota Raize Z - 2020</div>
+                  <div className="grid grid-cols-2 gap-x-2 gap-y-1 text-xs text-gray-600 mb-2">
+                    <div className="flex items-center gap-1"><span>⛽</span>Petrol</div>
+                    <div className="flex items-center gap-1"><span>🛣️</span>56,610 km</div>
+                    <div className="flex items-center gap-1"><span className='inline-block w-3 h-3 rounded-full mr-1' style={{background:'#222',border:'1px solid #ccc'}}></span>Aggressive Black</div>
+                  </div>
                 </div>
-                {/* Card Content */}
-                <div className="p-6 flex-1 flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-xs text-red-500 font-semibold uppercase tracking-wide">{car.brand}</span>
-                      <span className="text-xs text-gray-400">|</span>
-                      <span className="text-xs text-gray-600 font-medium">{car.model}</span>
-                    </div>
-                    <div className="font-bold text-xl text-gray-900 mb-2 leading-tight">{car.name}</div>
-                    <div className="grid grid-cols-2 gap-x-2 gap-y-1 text-xs text-gray-600 mb-2">
-                      <div className="flex items-center gap-1"><span>⛽</span>{car.fuel}</div>
-                      <div className="flex items-center gap-1"><span>🛣️</span>{car.mileage.toLocaleString()} km</div>
-                      {car.id === 1002 ? (
-                        <div className="flex items-center gap-1"><span className='inline-block w-3 h-3 rounded-full mr-1' style={{background:'#888',border:'1px solid #ccc'}}></span>Silky Grey</div>
-                      ) : (
-                        <div className="flex items-center gap-1"><span className='inline-block w-3 h-3 rounded-full mr-1' style={{background:'#fff',border:'1px solid #ccc'}}></span>Pearl White</div>
-                      )}
-                    </div>
-                  </div>
-                  <div className="font-bold text-xl text-red-600 mt-4">
-                    {car.price && car.price > 0 ? `$${car.price.toLocaleString()}` : 'Call for Price'}
-                  </div>
+                <div className="font-bold text-xl text-red-600 mt-4">
+                  Call for Price
                 </div>
               </div>
-            </Link>
+            </div>
+          </Link>
+          {paginatedCars.map((car) => (
+            <CarCard key={car.id} car={car} />
           ))}
         </div>
         {/* Pagination Bar */}
@@ -378,5 +375,50 @@ const Inventory = () => {
     </div>
   );
 };
+
+// CarCard component for each car
+const CarCard = memo(({ car }: { car: Car }) => (
+  <Link key={car.id} to={`/car/${car.id}`} className="block group">
+    <div className="relative bg-white rounded-3xl border border-gray-200 shadow-xl overflow-hidden w-full mx-auto flex flex-col cursor-pointer transition-transform duration-300 group-hover:shadow-2xl group-hover:scale-105 min-h-[420px] h-[480px] max-w-xs mx-auto">
+      {/* Featured Badge */}
+      {car.badges && car.badges.length > 0 && (
+        <div className="absolute top-3 left-3 z-10">
+          <span className="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded shadow">{car.badges[0]}</span>
+        </div>
+      )}
+      {/* Car Image */}
+      <div className="w-full h-56 bg-gray-100 flex items-center justify-center overflow-hidden">
+        <img src={car.image} alt={car.name} className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110" />
+      </div>
+      {/* Card Content */}
+      <div className="p-6 flex-1 flex flex-col justify-between">
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-xs text-red-500 font-semibold uppercase tracking-wide">{car.brand}</span>
+            <span className="text-xs text-gray-400">|</span>
+            <span className="text-xs text-gray-600 font-medium">{car.model}</span>
+          </div>
+          <div className="font-bold text-xl text-gray-900 mb-2 leading-tight">{car.name}</div>
+          <div className="grid grid-cols-2 gap-x-2 gap-y-1 text-xs text-gray-600 mb-2">
+            <div className="flex items-center gap-1"><span>⛽</span>{car.fuel}</div>
+            <div className="flex items-center gap-1"><span>🛣️</span>{car.mileage.toLocaleString()} km</div>
+            {car.id === 1002 ? (
+              <div className="flex items-center gap-1"><span className='inline-block w-3 h-3 rounded-full mr-1' style={{background:'#888',border:'1px solid #ccc'}}></span>Silky Grey</div>
+            ) : car.id === 1004 ? (
+              <div className="flex items-center gap-1"><span className='inline-block w-3 h-3 rounded-full mr-1' style={{background:'#222',border:'1px solid #ccc'}}></span>Aggressive Black</div>
+            ) : car.id === 1005 ? (
+              <div className="flex items-center gap-1"><span className='inline-block w-3 h-3 rounded-full mr-1' style={{background:'#C0C0C0',border:'1px solid #ccc'}}></span>Silver</div>
+            ) : (
+              <div className="flex items-center gap-1"><span className='inline-block w-3 h-3 rounded-full mr-1' style={{background:'#fff',border:'1px solid #ccc'}}></span>Pearl White</div>
+            )}
+          </div>
+        </div>
+        <div className="font-bold text-xl text-red-600 mt-4">
+          {car.price && car.price > 0 ? `$${car.price.toLocaleString()}` : 'Call for Price'}
+        </div>
+      </div>
+    </div>
+  </Link>
+));
 
 export default Inventory;

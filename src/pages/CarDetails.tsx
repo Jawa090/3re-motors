@@ -55,7 +55,7 @@ const CarDetails = () => {
                 alt={car.name}
                 className="max-h-[500px] w-auto h-auto object-contain mx-auto"
               />
-              <div className="absolute top-6 left-6 flex flex-wrap gap-2">
+              <div className="absolute top-6 left-6 flex gap-2 overflow-x-auto whitespace-nowrap">
                 {car.badges.map((badge, index) => (
                   <Badge key={index} className="bg-red-600 text-white px-4 py-2 text-sm font-semibold animate-bounce-in" style={{ animationDelay: `${index * 200}ms` }}>
                     {badge}
