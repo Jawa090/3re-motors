@@ -13,6 +13,89 @@ const Index = () => {
     customers: 0,
     featured: 0
   });
+  
+  // Add carousel state with slide direction
+  const [currentBanner, setCurrentBanner] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [slideDirection, setSlideDirection] = useState('right'); // 'left' or 'right'
+  
+  const heroBanners = [
+    {
+      id: 1,
+      title: "Buy, Sell & Import Services",
+      subtitle: "Find Your Perfect Vehicle, Anywhere!",
+      description: "Browse, buy, sell, or import cars with ease. All the services you need—seamlessly in one place.",
+      buttonText: "View Inventory",
+      buttonLink: "/inventory"
+    },
+    {
+      id: 2,
+      title: "Sell Your Car",
+      subtitle: "Ready to Upgrade? Sell Your Car Fast!",
+      description: "Get the best value and a wide audience—list your car today and let buyers come to you.",
+      buttonText: "Sell Now",
+      buttonLink: "/sell-car"
+    },
+    {
+      id: 3,
+      title: "Import Car",
+      subtitle: "Dream Car Not Available Here? Import It!",
+      description: "We simplify car imports—sourcing, shipping, and customs, all handled with transparent pricing.",
+      buttonText: "Import Car",
+      buttonLink: "/buy-import-services"
+    },
+    {
+      id: 4,
+      title: "7 Days Money Back Guarantee",
+      subtitle: "Buy with Total Confidence!",
+      description: "Every purchase is backed by our 7-Day Money Back Guarantee. Love it—or return it, no questions asked.",
+      buttonText: "Learn More",
+      buttonLink: "/about"
+    }
+  ];
+
+  // Enhanced auto-rotate carousel with smooth transitions
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setSlideDirection('right');
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setCurrentBanner(prev => (prev + 1) % heroBanners.length);
+        setIsTransitioning(false);
+      }, 500);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const nextBanner = () => {
+    if (isTransitioning) return;
+    setSlideDirection('right');
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentBanner(prev => (prev + 1) % heroBanners.length);
+      setIsTransitioning(false);
+    }, 500);
+  };
+
+  const prevBanner = () => {
+    if (isTransitioning) return;
+    setSlideDirection('left');
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentBanner(prev => (prev - 1 + heroBanners.length) % heroBanners.length);
+      setIsTransitioning(false);
+    }, 500);
+  };
+
+  const goToBanner = (index: number) => {
+    if (isTransitioning || index === currentBanner) return;
+    setSlideDirection(index > currentBanner ? 'right' : 'left');
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentBanner(index);
+      setIsTransitioning(false);
+    }, 500);
+  };
 
   // Animation for counters
   useEffect(() => {
@@ -428,130 +511,217 @@ const Index = () => {
       <Navigation />
 
       {/* HERO SECTION */}
-<section className="relative min-h-[420px] flex items-stretch bg-[#1a2236] overflow-hidden">
-  {/* Single Red angled stripe */}
-  <div className="absolute left-0 top-0 h-full w-32 z-10 flex items-start">
-    <div
-      className="w-24 h-[420px] bg-red-600"
-      style={{
-        transform: 'rotate(-22deg) translate(-30px, -40px)',
-        borderRadius: '8px',
-        boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
-      }}
-    />
-  </div>
-  {/* Large semi-transparent 3RE */}
-  <div className="absolute inset-0 flex items-center justify-end z-0 pointer-events-none select-none">
-    <span
-      style={{
-        fontSize: '350px',
-        fontWeight: 900,
-        color: 'rgba(255,255,255,0.04)',
-        letterSpacing: '-0.1em',
-        marginRight: '60px',
-        fontFamily: 'Montserrat, Poppins, Nunito Sans, Arial, sans-serif',
-        lineHeight: 1,
-      }}
-    >
-      3RE
-    </span>
-  </div>
-  {/* Main content */}
-  <div className="relative z-20 flex-1 flex flex-col justify-center pl-40 md:pl-56">
-    <h1 className="text-white text-2xl md:text-4xl font-extrabold uppercase mb-8 tracking-wide drop-shadow-lg leading-tight">
-  Sell, Purchase & Import All Types of Motor Vehicles
-</h1>
-    <a
-      href="/inventory"
-      className="bg-red-600 text-white px-8 py-3 rounded font-bold shadow hover:bg-red-700 transition w-max text-lg"
-      style={{ marginLeft: '4px' }}
-    >
-      View Inventory
-    </a>
-  </div>
-  {/* Car image */}
-  <div className="relative z-20 flex-1 flex items-end justify-end pr-16">
-    <img
-      src="/Car.png"
-      alt="Car"
-      className="w-[420px] h-auto object-contain drop-shadow-2xl"
-      style={{ maxHeight: 300 }}
-    />
-  </div>
-</section>
-{/* Bottom search bar */}
-<section className="bg-[#e9eef4] py-8 border-t border-gray-200">
-  <div className="max-w-2xl mx-auto flex flex-col items-center">
-    <h2 className="font-bold text-lg md:text-2xl mb-4 text-center tracking-wide text-[#1a2236]">
-      YOU CHOOSE YOUR CAR ONLINE. WE DELIVER IT.
-    </h2>
-    <form className="flex w-full max-w-xl gap-2" onSubmit={e => {
-      e.preventDefault();
-      if (heroSearch.trim()) {
-        navigate(`/inventory?search=${encodeURIComponent(heroSearch.trim())}`);
-      } else {
-        navigate('/inventory');
-      }
-    }}>
-      <input
-        type="text"
-        placeholder="Enter Make, Model Or Body Style"
-        className="flex-1 px-4 py-2 rounded-l border border-gray-300 focus:outline-none"
-        value={heroSearch}
-        onChange={e => setHeroSearch(e.target.value)}
-      />
-      <button
-        type="submit"
-        className="px-6 py-2 rounded-r bg-red-600 text-white font-bold"
-      >
-        Find Your Car
-      </button>
-    </form>
-    {/* Show search results below the search bar if there is a search */}
-    {heroSearch.trim() && (
-      <div className="w-full mt-8">
-        {filteredHomeCars.length === 0 ? (
-          <div className="text-center text-red-600 text-lg font-semibold">No cars found.</div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {filteredHomeCars.map(car => (
-              <div key={car.id} className="bg-white rounded-xl shadow p-4 flex flex-col md:flex-row gap-4 items-center">
-                <img src={car.image} alt={car.name} className="w-32 h-20 object-cover rounded-lg" />
-                <div className="flex-1">
-                  <div className="font-bold text-gray-900 text-lg">{car.name}</div>
-                  <div className="text-gray-600 text-sm">{car.specs.engine} | {car.specs.fuel} | {car.badge}</div>
-                  <div className="text-red-600 font-bold mt-1">{car.price}</div>
-                </div>
-                <Link to={`/car/${car.id}`} className="bg-red-600 text-white px-4 py-2 rounded font-semibold text-sm hover:bg-red-700 transition">View Details</Link>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    )}
-  </div>
-</section>
+      <section className="relative min-h-[420px] flex items-stretch bg-[#1a2236] overflow-hidden">
+        {/* Left Carousel Navigation */}
+        <div className="absolute left-4 top-1/2 transform -translate-y-1/2 z-30">
+          <button 
+            className={`bg-white/20 hover:bg-white/30 text-white p-3 rounded-full backdrop-blur-sm transition-all duration-300 shadow-lg ${
+              isTransitioning ? 'opacity-50 cursor-not-allowed' : 'hover:scale-110 hover:bg-white/40'
+            }`}
+            onClick={prevBanner}
+            disabled={isTransitioning}
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+        </div>
 
-      {/* Three Feature Boxes Section */}
+        {/* Right Carousel Navigation */}
+        <div className="absolute right-4 top-1/2 transform -translate-y-1/2 z-30">
+          <button 
+            className={`bg-white/20 hover:bg-white/30 text-white p-3 rounded-full backdrop-blur-sm transition-all duration-300 shadow-lg ${
+              isTransitioning ? 'opacity-50 cursor-not-allowed' : 'hover:scale-110 hover:bg-white/40'
+            }`}
+            onClick={nextBanner}
+            disabled={isTransitioning}
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Carousel Indicators */}
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-30 flex space-x-3">
+          {heroBanners.map((banner, index) => (
+            <button
+              key={banner.id}
+              className={`w-4 h-4 rounded-full transition-all duration-500 ${
+                index === currentBanner 
+                  ? 'bg-red-600 scale-125 shadow-lg' 
+                  : 'bg-white/30 hover:bg-white/50 hover:scale-110'
+              }`}
+              onClick={() => goToBanner(index)}
+              disabled={isTransitioning}
+            />
+          ))}
+        </div>
+
+        {/* Progress Bar */}
+        <div className="absolute bottom-0 left-0 w-full h-1 bg-white/10 z-20">
+          <div 
+            className="h-full bg-red-600 transition-all duration-300 ease-linear"
+            style={{ 
+              width: `${((currentBanner + 1) / heroBanners.length) * 100}%`,
+              transition: isTransitioning ? 'none' : 'width 6s linear'
+            }}
+          />
+        </div>
+
+        {/* Single Red angled stripe */}
+        <div className="absolute left-0 top-0 h-full w-32 z-10 flex items-start">
+          <div
+            className="w-24 h-[420px] bg-red-600"
+            style={{
+              transform: 'rotate(-22deg) translate(-30px, -40px)',
+              borderRadius: '8px',
+              boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
+            }}
+          />
+        </div>
+
+        {/* Large semi-transparent 3RE */}
+        <div className="absolute inset-0 flex items-center justify-end z-0 pointer-events-none select-none">
+          <span
+            style={{
+              fontSize: '350px',
+              fontWeight: 900,
+              color: 'rgba(255,255,255,0.04)',
+              letterSpacing: '-0.1em',
+              marginRight: '60px',
+              fontFamily: 'Montserrat, Poppins, Nunito Sans, Arial, sans-serif',
+              lineHeight: 1,
+            }}
+          >
+            3RE
+          </span>
+        </div>
+
+        {/* Main content with beautiful slide animations */}
+        <div className="relative z-20 flex-1 flex flex-col justify-center pl-40 md:pl-56 overflow-hidden">
+          <div className={`transition-all duration-500 ease-in-out ${
+            isTransitioning 
+              ? slideDirection === 'right'
+                ? 'opacity-0 transform translate-x-full scale-95' 
+                : 'opacity-0 transform -translate-x-full scale-95'
+              : 'opacity-100 transform translate-x-0 scale-100'
+          }`}>
+            <h1 className="text-white text-2xl md:text-4xl font-extrabold uppercase mb-4 tracking-wide drop-shadow-lg leading-tight">
+              {heroBanners[currentBanner].title}
+            </h1>
+            <h2 className="text-red-400 text-lg md:text-2xl font-bold mb-4 tracking-wide drop-shadow-lg">
+              {heroBanners[currentBanner].subtitle}
+            </h2>
+            <p className="text-white/80 text-base md:text-lg mb-8 leading-relaxed max-w-2xl">
+              {heroBanners[currentBanner].description}
+            </p>
+            <a
+              href={heroBanners[currentBanner].buttonLink}
+              className="bg-red-600 text-white px-8 py-3 rounded font-bold shadow hover:bg-red-700 transition-all duration-300 w-max text-lg hover:scale-105 hover:shadow-xl"
+              style={{ marginLeft: '4px' }}
+            >
+              {heroBanners[currentBanner].buttonText}
+            </a>
+          </div>
+        </div>
+
+        {/* Car image with slide animation */}
+        <div className="relative z-20 flex-1 flex items-end justify-end pr-16 overflow-hidden">
+          <img
+            src="/Car.png"
+            alt="Car"
+            className={`w-[420px] h-auto object-contain drop-shadow-2xl transition-all duration-500 ${
+              isTransitioning 
+                ? slideDirection === 'right'
+                  ? 'opacity-50 transform translate-x-8 scale-95' 
+                  : 'opacity-50 transform -translate-x-8 scale-95'
+                : 'opacity-100 transform translate-x-0 scale-100'
+            }`}
+            style={{ maxHeight: 300 }}
+          />
+        </div>
+      </section>
+
+      {/* Bottom search bar */}
+      <section className="bg-[#e9eef4] py-8 border-t border-gray-200">
+        <div className="max-w-2xl mx-auto flex flex-col items-center">
+          <h2 className="font-bold text-lg md:text-2xl mb-4 text-center tracking-wide text-[#1a2236]">
+            YOU CHOOSE YOUR CAR ONLINE. WE DELIVER IT.
+          </h2>
+          <form className="flex w-full max-w-xl gap-2" onSubmit={e => {
+            e.preventDefault();
+            if (heroSearch.trim()) {
+              navigate(`/inventory?search=${encodeURIComponent(heroSearch.trim())}`);
+            } else {
+              navigate('/inventory');
+            }
+          }}>
+            <input
+              type="text"
+              placeholder="Enter Make, Model Or Body Style"
+              className="flex-1 px-4 py-2 rounded-l border border-gray-300 focus:outline-none"
+              value={heroSearch}
+              onChange={e => setHeroSearch(e.target.value)}
+            />
+            <button
+              type="submit"
+              className="px-6 py-2 rounded-r bg-red-600 text-white font-bold"
+            >
+              Find Your Car
+            </button>
+          </form>
+          {/* Show search results below the search bar if there is a search */}
+          {heroSearch.trim() && (
+            <div className="w-full mt-8">
+              {filteredHomeCars.length === 0 ? (
+                <div className="text-center text-red-600 text-lg font-semibold">No cars found.</div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {filteredHomeCars.map(car => (
+                    <div key={car.id} className="bg-white rounded-xl shadow p-4 flex flex-col md:flex-row gap-4 items-center">
+                      <img src={car.image} alt={car.name} className="w-32 h-20 object-cover rounded-lg" />
+                      <div className="flex-1">
+                        <div className="font-bold text-gray-900 text-lg">{car.name}</div>
+                        <div className="text-gray-600 text-sm">{car.specs.engine} | {car.specs.fuel} | {car.badge}</div>
+                        <div className="text-red-600 font-bold mt-1">{car.price}</div>
+                      </div>
+                      <Link to={`/car/${car.id}`} className="bg-red-600 text-white px-4 py-2 rounded font-semibold text-sm hover:bg-red-700 transition">View Details</Link>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Four Feature Boxes Section */}
       <section className="w-full flex justify-center mt-8">
-        <div className="flex flex-col md:flex-row gap-6 max-w-5xl w-full justify-center items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl w-full">
           {/* Buy New One */}
-          <div className="flex-1 min-w-[260px] max-w-xs bg-[#e3342f] flex flex-col items-center justify-center p-8 min-h-[220px] text-center rounded-xl shadow-lg">
+          <div className="bg-[#e3342f] flex flex-col items-center justify-center p-8 min-h-[220px] text-center rounded-xl shadow-lg">
             <h3 className="text-white text-lg md:text-xl font-extrabold uppercase mb-2 tracking-wide">BUY NEW ONE</h3>
             <p className="text-white text-sm md:text-base mb-6">Multiple inspections. Free CARFAX® history report. Free limited warranty.</p>
             <a href="/inventory" className="bg-[#19233a] text-white px-5 py-2 rounded font-semibold text-sm md:text-base shadow hover:bg-black transition">View Inventory</a>
           </div>
           {/* Sell Your Car */}
-          <div className="flex-1 min-w-[260px] max-w-xs bg-[#19233a] flex flex-col items-center justify-center p-8 min-h-[220px] text-center rounded-xl shadow-lg">
+          <div className="bg-[#19233a] flex flex-col items-center justify-center p-8 min-h-[220px] text-center rounded-xl shadow-lg">
             <h3 className="text-white text-lg md:text-xl font-extrabold uppercase mb-2 tracking-wide">SELL YOUR CAR</h3>
             <p className="text-white text-sm md:text-base mb-6">No haggling. No hassles. An easy and efficient car buying process— the way it should be.</p>
             <a href="/contact" className="bg-[#e3342f] text-white px-5 py-2 rounded font-semibold text-sm md:text-base shadow hover:bg-red-700 transition">Contact Us</a>
           </div>
           {/* Import Cars */}
-          <div className="flex-1 min-w-[260px] max-w-xs bg-[#a3a9ad] flex flex-col items-center justify-center p-8 min-h-[220px] text-center rounded-xl shadow-lg">
+          <div className="bg-[#a3a9ad] flex flex-col items-center justify-center p-8 min-h-[220px] text-center rounded-xl shadow-lg">
             <h3 className="text-white text-lg md:text-xl font-extrabold uppercase mb-2 tracking-wide">IMPORT CARS</h3>
             <p className="text-white text-sm md:text-base mb-6">Get your car or truck shipped to your home or a convenient nearby location.</p>
             <a href="/contact" className="bg-[#19233a] text-white px-5 py-2 rounded font-semibold text-sm md:text-base shadow hover:bg-black transition">Submit Detail</a>
+          </div>
+          {/* Escrow Service */}
+          <div className="bg-[#dc2626] flex flex-col items-center justify-center p-8 min-h-[220px] text-center rounded-xl shadow-lg">
+            <h3 className="text-white text-lg md:text-xl font-extrabold uppercase mb-2 tracking-wide">ESCROW SERVICE</h3>
+            <p className="text-white text-sm md:text-base mb-6">Secure payment protection for vehicle transactions. Buy and sell with complete confidence.</p>
+            <a href="/escrow-service" className="bg-[#19233a] text-white px-5 py-2 rounded font-semibold text-sm md:text-base shadow hover:bg-black transition">Learn More</a>
           </div>
         </div>
       </section>
