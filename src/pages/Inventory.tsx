@@ -366,6 +366,70 @@ const Inventory = () => {
           {paginatedCars.map((car) => (
             <CarCard key={car.id} car={car} />
           ))}
+          {/* Hardcoded Toyota Aqua S - 2020 card */}
+          <Link key={1007} to="/car/1007" className="block group">
+            <div className="relative bg-white rounded-3xl border border-gray-200 shadow-xl overflow-hidden w-full mx-auto flex flex-col cursor-pointer transition-transform duration-300 group-hover:shadow-2xl group-hover:scale-105 min-h-[420px] h-[480px] max-w-xs mx-auto">
+              {/* Featured Badge */}
+              <div className="absolute top-3 left-3 z-10">
+                <span className="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded shadow">Used</span>
+              </div>
+              {/* Car Image */}
+              <div className="w-full h-56 bg-gray-100 flex items-center justify-center overflow-hidden">
+                <img src="/toyota aqua prius/7.jpg" alt="Toyota Aqua S - 2020" className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110" />
+              </div>
+              {/* Card Content */}
+              <div className="p-6 flex-1 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-xs text-red-500 font-semibold uppercase tracking-wide">Toyota</span>
+                    <span className="text-xs text-gray-400">|</span>
+                    <span className="text-xs text-gray-600 font-medium">Aqua S</span>
+                  </div>
+                  <div className="font-bold text-xl text-gray-900 mb-2 leading-tight">Toyota Aqua S - 2020</div>
+                  <div className="grid grid-cols-2 gap-x-2 gap-y-1 text-xs text-gray-600 mb-2">
+                    <div className="flex items-center gap-1"><span>⛽</span>Hybrid</div>
+                    <div className="flex items-center gap-1"><span>🛣️</span>108,500 km</div>
+                    <div className="flex items-center gap-1"><span className='inline-block w-3 h-3 rounded-full mr-1' style={{background:'#C0C0C0',border:'1px solid #ccc'}}></span>Silver</div>
+                  </div>
+                </div>
+                <div className="font-bold text-xl text-red-600 mt-4">
+                  Call for Price
+                </div>
+              </div>
+            </div>
+          </Link>
+          {/* Hardcoded Toyota Land Cruiser Prado TX L Package 2.7 - 2010 card */}
+          <Link key={1009} to="/car/1009" className="block group">
+            <div className="relative bg-white rounded-3xl border border-gray-200 shadow-xl overflow-hidden w-full mx-auto flex flex-col cursor-pointer transition-transform duration-300 group-hover:shadow-2xl group-hover:scale-105 min-h-[420px] h-[480px] max-w-xs mx-auto">
+              {/* Featured Badge */}
+              <div className="absolute top-3 left-3 z-10">
+                <span className="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded shadow">Used</span>
+              </div>
+              {/* Car Image */}
+              <div className="w-full h-56 bg-gray-100 flex items-center justify-center overflow-hidden">
+                <img src="/Toyota Land Cruser/2.jpg" alt="Toyota Prado TX L Package 2.7 - 2010" className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110" />
+              </div>
+              {/* Card Content */}
+              <div className="p-6 flex-1 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-xs text-red-500 font-semibold uppercase tracking-wide">Toyota</span>
+                    <span className="text-xs text-gray-400">|</span>
+                    <span className="text-xs text-gray-600 font-medium">Prado TX L Package 2.7</span>
+                  </div>
+                  <div className="font-bold text-xl text-gray-900 mb-2 leading-tight">Toyota Prado TX L Package 2.7 - 2010</div>
+                  <div className="grid grid-cols-2 gap-x-2 gap-y-1 text-xs text-gray-600 mb-2">
+                    <div className="flex items-center gap-1"><span>⛽</span>Petrol</div>
+                    <div className="flex items-center gap-1"><span>🛣️</span>89,000 km</div>
+                    <div className="flex items-center gap-1"><span className='inline-block w-3 h-3 rounded-full mr-1' style={{background:'#fff',border:'1px solid #ccc'}}></span>White</div>
+                  </div>
+                </div>
+                <div className="font-bold text-xl text-red-600 mt-4">
+                  Call for Price
+                </div>
+              </div>
+            </div>
+          </Link>
         </div>
         {/* Pagination Bar */}
         {renderPagination()}
@@ -407,6 +471,8 @@ const CarCard = memo(({ car }: { car: Car }) => (
             ) : car.id === 1004 ? (
               <div className="flex items-center gap-1"><span className='inline-block w-3 h-3 rounded-full mr-1' style={{background:'#222',border:'1px solid #ccc'}}></span>Aggressive Black</div>
             ) : car.id === 1005 ? (
+              <div className="flex items-center gap-1"><span className='inline-block w-3 h-3 rounded-full mr-1' style={{background:'#C0C0C0',border:'1px solid #ccc'}}></span>Silver</div>
+            ) : car.id === 1007 ? (
               <div className="flex items-center gap-1"><span className='inline-block w-3 h-3 rounded-full mr-1' style={{background:'#C0C0C0',border:'1px solid #ccc'}}></span>Silver</div>
             ) : (
               <div className="flex items-center gap-1"><span className='inline-block w-3 h-3 rounded-full mr-1' style={{background:'#fff',border:'1px solid #ccc'}}></span>Pearl White</div>

@@ -55,13 +55,6 @@ const CarDetails = () => {
                 alt={car.name}
                 className="max-h-[500px] w-auto h-auto object-contain mx-auto"
               />
-              <div className="absolute top-6 left-6 flex gap-2 overflow-x-auto whitespace-nowrap">
-                {car.badges.map((badge, index) => (
-                  <Badge key={index} className="bg-red-600 text-white px-4 py-2 text-sm font-semibold animate-bounce-in" style={{ animationDelay: `${index * 200}ms` }}>
-                    {badge}
-                  </Badge>
-                ))}
-              </div>
             </div>
             {/* Horizontal scroller for images */}
             <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 mt-2">
@@ -135,7 +128,15 @@ const CarDetails = () => {
                   <Award className="w-6 h-6 text-red-500 mr-2" />
                   Description
                 </h3>
-                <p className="text-gray-600 leading-relaxed responsive-text">{car.description}</p>
+                <ul className="list-disc pl-6 text-gray-600 leading-relaxed responsive-text">
+                  {car.description
+                    .split(/\.|;|,/)
+                    .map((item, idx) => item.trim())
+                    .filter(item => item.length > 0)
+                    .map((item, idx) => (
+                      <li key={idx}>{item}</li>
+                    ))}
+                </ul>
               </div>
 
               <div className="mt-8 flex flex-col items-center justify-center">

@@ -134,194 +134,175 @@ const Index = () => {
   }, []);
   const featuredCars = [
     {
-      id: 1,
-      name: 'Toyota Fortuner',
-      year: '2024',
-      price: 'PKR 18,000,000',
-      originalPrice: 'PKR 19,000,000',
-      image: '/toyta.avif',
+      id: 1001,
+      name: 'TESLA Model X Dual Motor & Long Range',
+      year: '2018',
+      price: 'Call for Price',
+      originalPrice: 'Call for Price',
+      image: '/Tesla Model X/1.jpg',
       specs: {
-        engine: '2.7L Petrol',
+        engine: 'Electric Power 350 kW (469 hp)',
+        fuel: 'Electric',
+        mileage: '33,500 km',
+        transmission: 'AWD/4WD'
+      },
+      badge: 'Premium Electric SUV',
+      location: 'Un-Registered, Import from Japan',
+      rating: 5.0,
+      reviews: 150,
+      features: ['7 Seater', '450 Km Range', 'Smart Air Suspension', 'AWD Drivetrain']
+    },
+    {
+      id: 1002,
+      name: 'TESLA Model X Dual Motor & Long Range (Grey)',
+      year: '2018',
+      price: 'Call for Price',
+      originalPrice: 'Call for Price',
+      image: '/Tesla Model X Grey/1.jpg',
+      specs: {
+        engine: 'Electric Power 350 kW (469 hp)',
+        fuel: 'Electric',
+        mileage: '33,500 km',
+        transmission: 'AWD/4WD'
+      },
+      badge: 'Premium Electric SUV',
+      location: 'Un-Registered, Import from Japan',
+      rating: 5.0,
+      reviews: 120,
+      features: ['7 Seater', '450 Km Range', 'Smart Air Suspension', 'AWD Drivetrain']
+    },
+    {
+      id: 1003,
+      name: 'Toyota Prius HEV',
+      year: '2023',
+      price: 'Call for Price',
+      originalPrice: 'Call for Price',
+      image: '/Toyota Prius/1.jpg',
+      specs: {
+        engine: 'Hybrid System Net Power 194 hp',
+        fuel: 'Hybrid',
+        mileage: '8,000 km',
+        transmission: 'ECVT'
+      },
+      badge: 'Premium Hybrid',
+      location: 'Punjab',
+      rating: 4.9,
+      reviews: 200,
+      features: ['Hybrid Technology', 'Fuel Efficient', 'Modern Design', 'Advanced Safety']
+    },
+    {
+      id: 1004,
+      name: 'Toyota Raize Z',
+      year: '2020',
+      price: 'Call for Price',
+      originalPrice: 'Call for Price',
+      image: '/Toyota Raize XS - 2020/1.jpg',
+      specs: {
+        engine: 'Top of the Line Z Package',
         fuel: 'Petrol',
-        mileage: '15,000 km',
+        mileage: '56,610 km',
         transmission: 'Automatic'
       },
       badge: 'Premium SUV',
-      location: 'Lahore, Pakistan',
-      rating: 4.9,
-      reviews: 120,
-      features: ['7 Seater', 'Push Start', 'Cruise Control', 'Touchscreen Display']
-    },
-    {
-      id: 2,
-      name: 'Toyota Land Cruiser',
-      year: '2023',
-      price: 'PKR 55,000,000',
-      originalPrice: 'PKR 58,000,000',
-      image: '/land.jpg',
-      specs: {
-        engine: '4.5L Diesel',
-        fuel: 'Diesel',
-        mileage: '22,000 km',
-        transmission: 'Automatic'
-      },
-      badge: 'Luxury SUV',
-      location: 'Karachi, Pakistan',
-      rating: 5.0,
-      reviews: 98,
-      features: ['Sunroof', 'Leather Seats', '4x4', 'Rear Entertainment']
-    },
-    {
-      id: 3,
-      name: 'Tesla Model S',
-      year: '2024',
-      price: 'PKR 32,000,000',
-      originalPrice: 'PKR 34,000,000',
-      image: 'teslamodal.avif',
-      specs: {
-        engine: 'Electric',
-        fuel: 'Electric',
-        mileage: '5,000 km',
-        transmission: 'Automatic'
-      },
-      badge: 'Electric',
-      location: 'Islamabad, Pakistan',
+      location: 'Un-Registered, Import from Japan',
       rating: 4.8,
-      reviews: 45,
-      features: ['Autopilot', 'Long Range', 'Premium Audio', 'Touchscreen']
-    },
-    {
-      id: 4,
-      name: 'Honda Civic',
-      year: '2023',
-      price: 'PKR 8,500,000',
-      originalPrice: 'PKR 9,000,000',
-      image: '/civic.avif',
-      specs: {
-        engine: '1.5L Turbo',
-        fuel: 'Petrol',
-        mileage: '10,000 km',
-        transmission: 'CVT'
-      },
-      badge: 'Sedan',
-      location: 'Lahore, Pakistan',
-      rating: 4.7,
-      reviews: 210,
-      features: ['Turbo Engine', 'Climate Control', 'Alloy Wheels', 'Rear Camera']
-    },
-    {
-      id: 5,
-      name: 'Toyota Corolla Grande',
-      year: '2023',
-      price: 'PKR 7,200,000',
-      originalPrice: 'PKR 7,500,000',
-      image: '/grande.jpg',
-      specs: {
-        engine: '1.8L Petrol',
-        fuel: 'Petrol',
-        mileage: '8,000 km',
-        transmission: 'Automatic'
-      },
-      badge: 'Popular',
-      location: 'Faisalabad, Pakistan',
-      rating: 4.6,
       reviews: 180,
-      features: ['Sunroof', 'Cruise Control', 'Push Start', 'Touchscreen']
+      features: ['4.5 Grade Auction', '360 Cameras', 'TOYOTA Safety Sense', '18-20 Km/L']
     },
     {
-      id: 6,
-      name: 'Suzuki Alto',
-      year: '2024',
-      price: 'PKR 2,500,000',
-      originalPrice: 'PKR 2,700,000',
-      image: '/alto.webp',
+      id: 1005,
+      name: 'Honda Civic Oriel 1.8 i-VTEC',
+      year: '2018',
+      price: 'Call for Price',
+      originalPrice: 'Call for Price',
+      image: '/Civic/1.jpg',
       specs: {
-        engine: '660cc',
+        engine: '1.8L - X UG Leather Package',
         fuel: 'Petrol',
-        mileage: '3,000 km',
+        mileage: '31,000 km',
         transmission: 'Automatic'
       },
-      badge: 'Economy',
-      location: 'Multan, Pakistan',
-      rating: 4.5,
-      reviews: 300,
-      features: ['Fuel Efficient', 'Power Steering', 'Air Conditioning', 'ABS']
-    },
-    {
-      id: 7,
-      name: 'Kia Sportage',
-      year: '2023',
-      price: 'PKR 8,000,000',
-      originalPrice: 'PKR 8,300,000',
-      image: '/kiaaa.avif',
-      specs: {
-        engine: '2.0L Petrol',
-        fuel: 'Petrol',
-        mileage: '12,000 km',
-        transmission: 'Automatic'
-      },
-      badge: 'SUV',
-      location: 'Karachi, Pakistan',
+      badge: 'Premium Sedan',
+      location: 'Punjab',
       rating: 4.7,
-      reviews: 160,
-      features: ['AWD', 'Panoramic Sunroof', 'Infotainment', 'LED Headlamps']
+      reviews: 250,
+      features: ['Sunroof', 'Push Start', 'Smart Entry', 'Leather Package']
     },
     {
-      id: 8,
-      name: 'MG HS',
-      year: '2023',
-      price: 'PKR 8,200,000',
-      originalPrice: 'PKR 8,500,000',
-      image: '/Mg.jpg',
+      id: 1006,
+      name: 'Nissan Kicks',
+      year: '2021',
+      price: 'Call for Price',
+      originalPrice: 'Call for Price',
+      image: '/Nissan kicks/10.jpg',
       specs: {
-        engine: '1.5L Turbo',
+        engine: '1300 cc',
         fuel: 'Petrol',
-        mileage: '7,000 km',
+        mileage: '42,000 km',
         transmission: 'Automatic'
       },
-      badge: 'Crossover',
-      location: 'Islamabad, Pakistan',
+      badge: 'Premium Crossover',
+      location: 'Punjab',
       rating: 4.6,
-      reviews: 90,
-      features: ['Panoramic Roof', 'Leather Seats', '360 Camera', 'Cruise Control']
+      reviews: 160,
+      features: ['Imported Assembly', 'White Color', 'Crossover Design', 'Modern Features']
     },
     {
-      id: 9,
-      name: 'Honda City',
-      year: '2023',
-      price: 'PKR 5,500,000',
-      originalPrice: 'PKR 5,700,000',
-      image: '/city.webp',
+      id: 1007,
+      name: 'Toyota Aqua S',
+      year: '2020',
+      price: 'Call for Price',
+      originalPrice: 'Call for Price',
+      image: '/toyota aqua prius/7.jpg',
       specs: {
-        engine: '1.2L Petrol',
-        fuel: 'Petrol',
-        mileage: '6,000 km',
+        engine: '1500 cc',
+        fuel: 'Hybrid',
+        mileage: '108,500 km',
         transmission: 'Automatic'
       },
-      badge: 'Sedan',
-      location: 'Lahore, Pakistan',
-      rating: 4.5,
+      badge: 'Premium Hybrid',
+      location: 'Un-Registered, Import from Japan',
+      rating: 4.8,
       reviews: 140,
-      features: ['Eco Mode', 'Touchscreen', 'ABS', 'Rear Camera']
+      features: ['4 Grade Auction', '30 KM/L Mileage', 'Hybrid Technology', 'Import 2024']
     },
     {
-      id: 10,
-      name: 'Hyundai Tucson',
-      year: '2023',
-      price: 'PKR 9,000,000',
-      originalPrice: 'PKR 9,300,000',
-      image: 'tucson.avif',
+      id: 1008,
+      name: 'Toyota Corolla Altis Grande X CVT-i 1.8',
+      year: '2021',
+      price: 'Call for Price',
+      originalPrice: 'Call for Price',
+      image: '/Toyota Corolla grande/6.jpg',
       specs: {
-        engine: '2.0L Petrol',
+        engine: '1800 cc',
         fuel: 'Petrol',
-        mileage: '9,000 km',
+        mileage: '45,000 km',
+        transmission: 'CVT-i'
+      },
+      badge: 'Premium Sedan',
+      location: 'Punjab',
+      rating: 4.9,
+      reviews: 220,
+      features: ['Sunroof', 'White with Beige Interior', 'Local Assembly', 'CVT Transmission']
+    },
+    {
+      id: 1009,
+      name: 'Toyota Prado TX L Package 2.7',
+      year: '2010',
+      price: 'Call for Price',
+      originalPrice: 'Call for Price',
+      image: '/Toyota Land Cruser/2.jpg',
+      specs: {
+        engine: '2700 cc',
+        fuel: 'Petrol',
+        mileage: '89,000 km',
         transmission: 'Automatic'
       },
-      badge: 'SUV',
-      location: 'Karachi, Pakistan',
+      badge: 'Premium SUV',
+      location: 'Punjab',
       rating: 4.7,
-      reviews: 110,
-      features: ['AWD', 'Smart Trunk', 'Panoramic Roof', 'LED Lights']
+      reviews: 180,
+      features: ['TX L Package', 'Uplifted to 2018 Model', 'Verified Auction Sheet', 'Imported Assembly']
     }
   ];
   const services = [{
@@ -381,17 +362,16 @@ const Index = () => {
     features: ["Same Day Delivery", "Nationwide Coverage", "Express Service", "Real-time Tracking"],
     stats: "Average 24hr Delivery"
   }];
-  // Use local images from public folder for heroCars
+  // Use actual cars from cars.ts for heroCars
   const heroCars = [
-    { name: 'Audi A4', img: '/Audi-A4.png', badgeColor: 'bg-black/80 border-purple-400 text-purple-200', shadow: 'drop-shadow-xl' },
-    { name: 'Chevrolet Camaro', img: '/camaro.png', badgeColor: 'bg-black/80 border-yellow-200 text-yellow-100', shadow: 'drop-shadow-xl' },
-    { name: 'Ford Mustang', img: '/Ford Mustang.png', badgeColor: 'bg-black/80 border-yellow-300 text-yellow-200', shadow: 'drop-shadow-xl' },
-    { name: 'Honda Civic', img: '/Honda-Civic.png', badgeColor: 'bg-black/80 border-blue-400 text-blue-200', shadow: 'drop-shadow-xl' },
-    { name: 'Lexus ES', img: '/Lexus ES.png', badgeColor: 'bg-black/80 border-indigo-400 text-indigo-200', shadow: 'drop-shadow-xl' },
-    { name: 'Mercedes Benz C-Class', img: '/Mercedes-Benz-C-Class-White.png', badgeColor: 'bg-black/80 border-gray-300 text-gray-100', shadow: 'drop-shadow-xl' },
-    { name: 'Porsche 911', img: '/Porche 911.webp', badgeColor: 'bg-black/80 border-pink-400 text-pink-200', shadow: 'drop-shadow-xl' },
-    { name: 'Range Rover', img: '/Range Rover.png', badgeColor: 'bg-black/80 border-green-300 text-green-100', shadow: 'drop-shadow-xl' },
-    { name: 'Tesla Model S', img: '/Tesla Model S.png', badgeColor: 'bg-black/80 border-red-300 text-red-100', shadow: 'drop-shadow-xl' },
+    { name: 'Tesla Model X', img: '/Tesla Model X/1.jpg', badgeColor: 'bg-black/80 border-red-400 text-red-200', shadow: 'drop-shadow-xl' },
+    { name: 'Toyota Prius HEV', img: '/Toyota Prius/1.jpg', badgeColor: 'bg-black/80 border-green-400 text-green-200', shadow: 'drop-shadow-xl' },
+    { name: 'Toyota Raize Z', img: '/Toyota Raize XS - 2020/1.jpg', badgeColor: 'bg-black/80 border-blue-400 text-blue-200', shadow: 'drop-shadow-xl' },
+    { name: 'Honda Civic', img: '/Civic/1.jpg', badgeColor: 'bg-black/80 border-silver-400 text-silver-200', shadow: 'drop-shadow-xl' },
+    { name: 'Nissan Kicks', img: '/Nissan kicks/10.jpg', badgeColor: 'bg-black/80 border-white-400 text-white-200', shadow: 'drop-shadow-xl' },
+    { name: 'Toyota Corolla Grande', img: '/Toyota Corolla grande/6.jpg', badgeColor: 'bg-black/80 border-gray-400 text-gray-200', shadow: 'drop-shadow-xl' },
+    { name: 'Toyota Aqua S', img: '/toyota aqua prius/7.jpg', badgeColor: 'bg-black/80 border-silver-400 text-silver-200', shadow: 'drop-shadow-xl' },
+    { name: 'Toyota Prado', img: '/Toyota Land Cruser/2.jpg', badgeColor: 'bg-black/80 border-white-400 text-white-200', shadow: 'drop-shadow-xl' },
   ];
   // Add state for search
   const [search, setSearch] = React.useState("");
