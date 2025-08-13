@@ -1,15 +1,18 @@
 
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Heart, Share2, Phone, Mail, MapPin, Calendar, Gauge, Fuel, Settings, Shield, Award, Star, Check } from 'lucide-react';
+import { useParams, Link, useLocation } from 'react-router-dom';
+import { ArrowLeft, Heart, Share2, Phone, Mail, MapPin, Calendar, Gauge, Fuel, Settings, Shield, Award, Star, Check, Maximize2, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { cars } from '../lib/cars';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 
 const CarDetails = () => {
   const { id } = useParams();
+  const location = useLocation();
+  const fromInventoryPage = (location.state as any)?.fromInventoryPage as number | undefined;
   const car = cars.find(c => c.id === parseInt(id || '0'));
   if (!car) {
     return <div className="min-h-screen bg-gray-50 flex items-center justify-center text-2xl text-red-600">Car not found.</div>;
@@ -18,6 +21,33 @@ const CarDetails = () => {
   // Use gallery for images
   const carImages = car.gallery;
   const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
+  const [isFullscreenOpen, setIsFullscreenOpen] = React.useState(false);
+
+  const openFullscreen = () => {
+    setIsFullscreenOpen(true);
+  };
+
+  const closeFullscreen = () => {
+    setIsFullscreenOpen(false);
+  };
+
+  const goToPrevious = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + carImages.length) % carImages.length);
+  };
+
+  const goToNext = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % carImages.length);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowLeft') {
+      goToPrevious();
+    } else if (e.key === 'ArrowRight') {
+      goToNext();
+    } else if (e.key === 'Escape') {
+      closeFullscreen();
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -27,7 +57,10 @@ const CarDetails = () => {
       <div className="bg-white shadow-sm border-b sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <Link to="/inventory" className="flex items-center text-gray-600 hover:text-red-600 transition-colors">
+            <Link
+              to={{ pathname: '/inventory', search: fromInventoryPage ? `?page=${fromInventoryPage}` : '' }}
+              className="flex items-center text-gray-600 hover:text-red-600 transition-colors"
+            >
               <ArrowLeft className="w-5 h-5 mr-2" />
               Back to Inventory
             </Link>
@@ -49,12 +82,22 @@ const CarDetails = () => {
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
           {/* Image Gallery */}
           <div className="space-y-4 animate-slide-in-left">
-            <div className="relative overflow-hidden rounded-3xl bg-white shadow-2xl modern-card flex items-center justify-center" style={{minHeight: '400px', height: 'auto'}}>
+            <div 
+              className="relative overflow-hidden rounded-3xl bg-white shadow-2xl modern-card flex items-center justify-center cursor-pointer group" 
+              style={{minHeight: '400px', height: 'auto'}}
+              onClick={openFullscreen}
+            >
               <img 
                 src={carImages[currentImageIndex]} 
                 alt={car.name}
                 className="max-h-[500px] w-auto h-auto object-contain mx-auto"
               />
+              {/* Fullscreen icon overlay on hover */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="bg-black/50 rounded-full p-3">
+                  <Maximize2 className="w-8 h-8 text-white" />
+                </div>
+              </div>
             </div>
             {/* Horizontal scroller for images */}
             <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 mt-2">
@@ -281,22 +324,32 @@ const CarDetails = () => {
         <div className="mt-12 bg-white rounded-3xl shadow-2xl p-8 modern-card animate-slide-up">
           <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">You Might Also Like</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              { name: "BMW X3 M Sport", price: 65000, image: "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=400&h=300&fit=crop" },
-              { name: "Audi Q5 Premium", price: 58000, image: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=400&h=300&fit=crop" },
-              { name: "Mercedes GLC 300", price: 62000, image: "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=400&h=300&fit=crop" }
-            ].map((vehicle, index) => (
-              <div key={index} className="group cursor-pointer modern-card hover:shadow-xl transition-all duration-300">
-                <div className="relative overflow-hidden rounded-xl">
-                  <img src={vehicle.image} alt={vehicle.name} className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300" />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
-                </div>
-                <div className="p-4">
-                  <h4 className="font-bold text-gray-900">{vehicle.name}</h4>
-                  <p className="text-red-600 font-bold">${vehicle.price.toLocaleString()}</p>
-                </div>
-              </div>
-            ))}
+            {(() => {
+              const primary = cars
+                .filter(c => c.id !== car.id && (c.brand === car.brand || c.bodyStyle === car.bodyStyle))
+                .slice(0, 3);
+              const fallback = primary.length < 3
+                ? cars.filter(c => c.id !== car.id && !primary.some(p => p.id === c.id)).slice(0, 3 - primary.length)
+                : [];
+              const related = [...primary, ...fallback];
+              return related.map((rc) => (
+                <Link
+                  key={rc.id}
+                  to={`/car/${rc.id}`}
+                  state={{ fromInventoryPage }}
+                  className="group cursor-pointer modern-card hover:shadow-xl transition-all duration-300"
+                >
+                  <div className="relative overflow-hidden rounded-xl">
+                    <img src={rc.image} alt={rc.name} className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300" />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
+                  </div>
+                  <div className="p-4">
+                    <h4 className="font-bold text-gray-900 truncate">{rc.name}</h4>
+                    <p className="text-red-600 font-bold">{rc.price && rc.price > 0 ? `$${rc.price.toLocaleString()}` : 'Call for Price'}</p>
+                  </div>
+                </Link>
+              ));
+            })()}
           </div>
         </div>
 
@@ -321,6 +374,56 @@ const CarDetails = () => {
       </div>
       
       <Footer />
+
+      {/* Fullscreen Image Modal */}
+      <Dialog open={isFullscreenOpen} onOpenChange={setIsFullscreenOpen}>
+        <DialogContent className="max-w-none w-screen h-screen p-0 bg-black border-0 rounded-none">
+          <div 
+            className="relative w-full h-full flex items-center justify-center"
+            onKeyDown={handleKeyDown}
+            tabIndex={0}
+          >
+            <img 
+              src={carImages[currentImageIndex]} 
+              alt={`${car.name} - Image ${currentImageIndex + 1}`}
+              className="w-auto h-auto max-w-none max-h-none object-contain"
+              style={{ maxWidth: '100vw', maxHeight: '100vh' }}
+            />
+            
+            {/* Close button */}
+            <button 
+              onClick={closeFullscreen} 
+              className="absolute top-4 right-4 p-3 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors z-10"
+              aria-label="Close fullscreen"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            
+            {/* Previous button */}
+            <button 
+              onClick={goToPrevious} 
+              className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors z-10"
+              aria-label="Previous image"
+            >
+              <ChevronLeft className="w-8 h-8" />
+            </button>
+            
+            {/* Next button */}
+            <button 
+              onClick={goToNext} 
+              className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors z-10"
+              aria-label="Next image"
+            >
+              <ChevronRight className="w-8 h-8" />
+            </button>
+            
+            {/* Image counter */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-sm bg-black/50 px-3 py-1 rounded-full z-10">
+              {currentImageIndex + 1} / {carImages.length}
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

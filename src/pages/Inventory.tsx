@@ -1,4 +1,4 @@
-import React, { useState, memo } from 'react';
+import React, { useState, memo, useEffect } from 'react';
 import { Search, Filter, Car, Heart, Eye, Fuel, Gauge, Calendar, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -18,13 +18,17 @@ const Inventory = () => {
     return params.get(param) || '';
   }
   const [priceRange, setPriceRange] = useState([0, 100000]);
-  const [yearRange, setYearRange] = useState([2015, 2024]);
-  const [mileageRange, setMileageRange] = useState([0, 50000]);
+  const [yearRange, setYearRange] = useState([2010, 2024]);
+  const [mileageRange, setMileageRange] = useState([0, 200000]);
   const [search, setSearch] = useState(getQueryParam('search'));
   const [make, setMake] = useState("");
   const [fuel, setFuel] = useState("");
   const [transmission, setTransmission] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(() => {
+    const raw = getQueryParam('page');
+    const parsed = parseInt(raw || '1', 10);
+    return Number.isFinite(parsed) && parsed > 0 ? parsed : 1;
+  });
   const carsPerPage = 12;
 
   // Get all unique brands from the cars array for the Make filter
@@ -64,6 +68,21 @@ const Inventory = () => {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  // Keep page in range when filters change and sync to URL
+  useEffect(() => {
+    if (totalPages > 0 && currentPage > totalPages) {
+      setCurrentPage(totalPages);
+      return;
+    }
+    if (currentPage < 1) {
+      setCurrentPage(1);
+      return;
+    }
+    const params = new URLSearchParams(location.search);
+    params.set('page', String(currentPage));
+    window.history.replaceState(null, '', `${location.pathname}?${params.toString()}`);
+  }, [currentPage, totalPages, location.pathname, location.search]);
 
   const renderPagination = () => (
     <div className="flex justify-center items-center gap-2 mt-12">
@@ -181,28 +200,28 @@ const Inventory = () => {
                 <button onClick={() => setPriceRange([0, 100000])} className="ml-1 text-yellow-500 hover:text-yellow-700 focus:outline-none">×</button>
               </Badge>
             )}
-            {(yearRange[0] !== 2015 || yearRange[1] !== 2024) && (
+            {(yearRange[0] !== 2010 || yearRange[1] !== 2024) && (
               <Badge className="bg-pink-100 text-pink-700 rounded-full px-3 py-1 flex items-center gap-1">
                 <Calendar className="w-4 h-4" /> {yearRange[0]} - {yearRange[1]}
-                <button onClick={() => setYearRange([2015, 2024])} className="ml-1 text-pink-500 hover:text-pink-700 focus:outline-none">×</button>
+                <button onClick={() => setYearRange([2010, 2024])} className="ml-1 text-pink-500 hover:text-pink-700 focus:outline-none">×</button>
               </Badge>
             )}
-            {(mileageRange[0] !== 0 || mileageRange[1] !== 50000) && (
+            {(mileageRange[0] !== 0 || mileageRange[1] !== 200000) && (
               <Badge className="bg-indigo-100 text-indigo-700 rounded-full px-3 py-1 flex items-center gap-1">
                 <MapPin className="w-4 h-4" /> {mileageRange[0]} - {mileageRange[1]} mi
-                <button onClick={() => setMileageRange([0, 50000])} className="ml-1 text-indigo-500 hover:text-indigo-700 focus:outline-none">×</button>
+                <button onClick={() => setMileageRange([0, 200000])} className="ml-1 text-indigo-500 hover:text-indigo-700 focus:outline-none">×</button>
               </Badge>
             )}
             {/* Clear All if any filter is active */}
-            {(search || make || fuel || transmission || priceRange[0] !== 0 || priceRange[1] !== 100000 || yearRange[0] !== 2015 || yearRange[1] !== 2024 || mileageRange[0] !== 0 || mileageRange[1] !== 50000) && (
+            {(search || make || fuel || transmission || priceRange[0] !== 0 || priceRange[1] !== 100000 || yearRange[0] !== 2010 || yearRange[1] !== 2024 || mileageRange[0] !== 0 || mileageRange[1] !== 200000) && (
               <Button
                 type="button"
                 variant="ghost"
                 className="ml-2 text-red-600 hover:text-white hover:bg-red-600 font-semibold px-4 py-2 rounded-full border border-red-200 transition"
                 onClick={() => {
                   setPriceRange([0, 100000]);
-                  setYearRange([2015, 2024]);
-                  setMileageRange([0, 50000]);
+                  setYearRange([2010, 2024]);
+                  setMileageRange([0, 200000]);
                   setSearch('');
                   setMake('');
                   setFuel('');
@@ -286,7 +305,7 @@ const Inventory = () => {
               <Slider
                 value={mileageRange}
                 onValueChange={setMileageRange}
-                max={100000}
+                max={200000}
                 min={0}
                 step={5000}
                 className="w-full"
@@ -331,105 +350,9 @@ const Inventory = () => {
 
         {/* Enhanced Car Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {/* Hardcoded Toyota Raize Z - 2020 card */}
-          <Link key={1004} to="/car/1004" className="block group">
-            <div className="relative bg-white rounded-3xl border border-gray-200 shadow-xl overflow-hidden w-full mx-auto flex flex-col cursor-pointer transition-transform duration-300 group-hover:shadow-2xl group-hover:scale-105 min-h-[420px] h-[480px] max-w-xs mx-auto">
-              {/* Featured Badge */}
-              <div className="absolute top-3 left-3 z-10">
-                <span className="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded shadow">Used</span>
-              </div>
-              {/* Car Image */}
-              <div className="w-full h-56 bg-gray-100 flex items-center justify-center overflow-hidden">
-                <img src="/Toyota Raize XS - 2020/1.jpg" alt="Toyota Raize Z - 2020" className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110" />
-              </div>
-              {/* Card Content */}
-              <div className="p-6 flex-1 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xs text-red-500 font-semibold uppercase tracking-wide">Toyota</span>
-                    <span className="text-xs text-gray-400">|</span>
-                    <span className="text-xs text-gray-600 font-medium">Raize Z</span>
-                  </div>
-                  <div className="font-bold text-xl text-gray-900 mb-2 leading-tight">Toyota Raize Z - 2020</div>
-                  <div className="grid grid-cols-2 gap-x-2 gap-y-1 text-xs text-gray-600 mb-2">
-                    <div className="flex items-center gap-1"><span>⛽</span>Petrol</div>
-                    <div className="flex items-center gap-1"><span>🛣️</span>56,610 km</div>
-                    <div className="flex items-center gap-1"><span className='inline-block w-3 h-3 rounded-full mr-1' style={{background:'#222',border:'1px solid #ccc'}}></span>Aggressive Black</div>
-                  </div>
-                </div>
-                <div className="font-bold text-xl text-red-600 mt-4">
-                  Call for Price
-                </div>
-              </div>
-            </div>
-          </Link>
           {paginatedCars.map((car) => (
-            <CarCard key={car.id} car={car} />
+            <CarCard key={car.id} car={car} currentPage={currentPage} />
           ))}
-          {/* Hardcoded Toyota Aqua S - 2020 card */}
-          <Link key={1007} to="/car/1007" className="block group">
-            <div className="relative bg-white rounded-3xl border border-gray-200 shadow-xl overflow-hidden w-full mx-auto flex flex-col cursor-pointer transition-transform duration-300 group-hover:shadow-2xl group-hover:scale-105 min-h-[420px] h-[480px] max-w-xs mx-auto">
-              {/* Featured Badge */}
-              <div className="absolute top-3 left-3 z-10">
-                <span className="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded shadow">Used</span>
-              </div>
-              {/* Car Image */}
-              <div className="w-full h-56 bg-gray-100 flex items-center justify-center overflow-hidden">
-                <img src="/toyota aqua prius/7.jpg" alt="Toyota Aqua S - 2020" className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110" />
-              </div>
-              {/* Card Content */}
-              <div className="p-6 flex-1 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xs text-red-500 font-semibold uppercase tracking-wide">Toyota</span>
-                    <span className="text-xs text-gray-400">|</span>
-                    <span className="text-xs text-gray-600 font-medium">Aqua S</span>
-                  </div>
-                  <div className="font-bold text-xl text-gray-900 mb-2 leading-tight">Toyota Aqua S - 2020</div>
-                  <div className="grid grid-cols-2 gap-x-2 gap-y-1 text-xs text-gray-600 mb-2">
-                    <div className="flex items-center gap-1"><span>⛽</span>Hybrid</div>
-                    <div className="flex items-center gap-1"><span>🛣️</span>108,500 km</div>
-                    <div className="flex items-center gap-1"><span className='inline-block w-3 h-3 rounded-full mr-1' style={{background:'#C0C0C0',border:'1px solid #ccc'}}></span>Silver</div>
-                  </div>
-                </div>
-                <div className="font-bold text-xl text-red-600 mt-4">
-                  Call for Price
-                </div>
-              </div>
-            </div>
-          </Link>
-          {/* Hardcoded Toyota Land Cruiser Prado TX L Package 2.7 - 2010 card */}
-          <Link key={1009} to="/car/1009" className="block group">
-            <div className="relative bg-white rounded-3xl border border-gray-200 shadow-xl overflow-hidden w-full mx-auto flex flex-col cursor-pointer transition-transform duration-300 group-hover:shadow-2xl group-hover:scale-105 min-h-[420px] h-[480px] max-w-xs mx-auto">
-              {/* Featured Badge */}
-              <div className="absolute top-3 left-3 z-10">
-                <span className="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded shadow">Used</span>
-              </div>
-              {/* Car Image */}
-              <div className="w-full h-56 bg-gray-100 flex items-center justify-center overflow-hidden">
-                <img src="/Toyota Land Cruser/2.jpg" alt="Toyota Prado TX L Package 2.7 - 2010" className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110" />
-              </div>
-              {/* Card Content */}
-              <div className="p-6 flex-1 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xs text-red-500 font-semibold uppercase tracking-wide">Toyota</span>
-                    <span className="text-xs text-gray-400">|</span>
-                    <span className="text-xs text-gray-600 font-medium">Prado TX L Package 2.7</span>
-                  </div>
-                  <div className="font-bold text-xl text-gray-900 mb-2 leading-tight">Toyota Prado TX L Package 2.7 - 2010</div>
-                  <div className="grid grid-cols-2 gap-x-2 gap-y-1 text-xs text-gray-600 mb-2">
-                    <div className="flex items-center gap-1"><span>⛽</span>Petrol</div>
-                    <div className="flex items-center gap-1"><span>🛣️</span>89,000 km</div>
-                    <div className="flex items-center gap-1"><span className='inline-block w-3 h-3 rounded-full mr-1' style={{background:'#fff',border:'1px solid #ccc'}}></span>White</div>
-                  </div>
-                </div>
-                <div className="font-bold text-xl text-red-600 mt-4">
-                  Call for Price
-                </div>
-              </div>
-            </div>
-          </Link>
         </div>
         {/* Pagination Bar */}
         {renderPagination()}
@@ -441,8 +364,13 @@ const Inventory = () => {
 };
 
 // CarCard component for each car
-const CarCard = memo(({ car }: { car: Car }) => (
-  <Link key={car.id} to={`/car/${car.id}`} className="block group">
+const CarCard = memo(({ car, currentPage }: { car: Car, currentPage?: number }) => (
+  <Link
+    key={car.id}
+    to={`/car/${car.id}`}
+    state={{ fromInventoryPage: currentPage }}
+    className="block group"
+  >
     <div className="relative bg-white rounded-3xl border border-gray-200 shadow-xl overflow-hidden w-full mx-auto flex flex-col cursor-pointer transition-transform duration-300 group-hover:shadow-2xl group-hover:scale-105 min-h-[420px] h-[480px] max-w-xs mx-auto">
       {/* Featured Badge */}
       {car.badges && car.badges.length > 0 && (
